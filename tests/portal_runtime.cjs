@@ -47,6 +47,7 @@ vm.runInContext(script, context);
 const run = code => vm.runInContext(code, context);
 
 assert.equal(get('project-name').textContent, payload.pbipName);
+assert.equal(run('state.page'), 'home', 'The report workspace opens on Home.');
 assert.equal(run('allFindings.length'), payload.bpa.violations.length, 'Use canonical BPA findings, including unmatched project findings.');
 if (payload.bpa.violations.some(f => f.ruleId === 'PROJECT_POLICY')) assert(run("allFindings.some(f => f.ruleId === 'PROJECT_POLICY')"));
 for (const page of ['home', 'catalog', 'checks', 'model', 'lineage']) run(`navigate('${page}')`);

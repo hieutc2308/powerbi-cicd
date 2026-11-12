@@ -1,5 +1,9 @@
 # Power BI PBIP CI/CD — Multi-ticket
 
+**Open the documentation portal:** [Lineage Studio](https://hieutc2308.github.io/powerbi-cicd/) · [TEST-001](https://hieutc2308.github.io/powerbi-cicd/TEST-001/)
+
+The portal is regenerated from all ticket projects on `main` when the Pages workflow runs successfully. Pull request branches and uncommitted local changes are not included; if a build or deployment fails, the previous published version remains available. Check [workflow runs](https://github.com/hieutc2308/powerbi-cicd/actions/workflows/pages.yml) to confirm the latest deployment.
+
 Each Jira ticket owns one independent Power BI project under `reports/<TICKET>/`. The current Admin Monitoring dashboard is in `reports/TEST-001/`. Analysis reads the report and model definitions without changing them.
 
 ## Repository layout

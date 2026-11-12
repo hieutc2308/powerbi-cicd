@@ -48,18 +48,18 @@ __PORTAL_STYLES__</style>
     <div class="brand"><span class="mark"><svg class="ui-icon" aria-hidden="true"><use href="#i-layers"></use></svg></span><span class="brand-name">Lineage Studio</span></div>
     <div class="project"><span>Power BI project</span><div id="project-name"></div></div>
     <div class="nav-label">Workspace</div>
-    <button class="nav-item" data-nav="home" title="Home"><i><svg class="ui-icon" aria-hidden="true"><use href="#i-home"></use></svg></i><span class="nav-text">Home</span></button>
+    <button class="nav-item active" data-nav="home" title="Home"><i><svg class="ui-icon" aria-hidden="true"><use href="#i-home"></use></svg></i><span class="nav-text">Home</span></button>
     <button class="nav-item" data-nav="catalog" title="Catalog"><i><svg class="ui-icon" aria-hidden="true"><use href="#i-catalog"></use></svg></i><span class="nav-text">Catalog</span><span class="number" id="catalog-total">0</span></button>
-    <button class="nav-item active" data-nav="lineage" title="Lineage"><i><svg class="ui-icon" aria-hidden="true"><use href="#i-lineage"></use></svg></i><span class="nav-text">Lineage</span></button>
+    <button class="nav-item" data-nav="lineage" title="Lineage"><i><svg class="ui-icon" aria-hidden="true"><use href="#i-lineage"></use></svg></i><span class="nav-text">Lineage</span></button>
     <button class="nav-item" data-nav="model" title="Data model"><i><svg class="ui-icon" aria-hidden="true"><use href="#i-table"></use></svg></i><span class="nav-text">Data model</span></button>
     <button class="nav-item" data-nav="checks" title="BPA findings"><i><svg class="ui-icon" aria-hidden="true"><use href="#i-checks"></use></svg></i><span class="nav-text">BPA findings</span></button>
     <div class="nav-bottom"><b>● Local project snapshot</b><br>Project metadata workspace<br><button style="color:#8994ac;padding:8px 0" id="collapse-nav"><svg class="ui-icon" aria-hidden="true"><use href="#i-sidebar"></use></svg> &nbsp; Collapse navigation</button></div>
   </nav>
   <div class="app">
     <header class="topbar"><button class="btn icon" id="nav-toggle" title="Toggle primary navigation" aria-label="Toggle primary navigation"><svg class="ui-icon" aria-hidden="true"><use href="#i-menu"></use></svg></button><div class="crumb" id="breadcrumb"></div><span class="grow"></span><button class="pill" id="gate-status" title="Open Advisory Gate and BPA findings"></button><span class="pill prototype">Metadata snapshot</span><button class="btn theme-switch" id="theme-toggle" title="Switch theme" aria-label="Switch to dark theme"></button><button class="btn" id="review-toggle"><svg class="ui-icon" aria-hidden="true"><use href="#i-comment"></use></svg>Review UI</button><button class="btn icon" id="theme-info" title="About this workspace"><svg class="ui-icon" aria-hidden="true"><use href="#i-info"></use></svg></button></header>
-    <section class="page" id="page-home" aria-label="Home"></section>
+    <section class="page active" id="page-home" aria-label="Home"></section>
     <section class="page" id="page-catalog" aria-label="Catalog"></section>
-    <section class="page lineage-page active" id="page-lineage" aria-label="Lineage">
+    <section class="page lineage-page" id="page-lineage" aria-label="Lineage">
       <div class="lineage-toolbar">
         <button class="btn icon" id="list-toggle" title="Toggle asset explorer"><svg class="ui-icon" aria-hidden="true"><use href="#i-sidebar"></use></svg></button>
         <div class="search"><svg class="ui-icon" aria-hidden="true"><use href="#i-search"></use></svg><input id="lineage-search" placeholder="Find a model object…" aria-label="Find lineage object"></div>

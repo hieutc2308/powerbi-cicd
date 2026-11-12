@@ -54,7 +54,7 @@ const initialObject = [...graphNodes].sort((a,b) => Number(b.kind === 'table') -
 const defaults = {type:true, checks:true, schema:true, dependencies:false, description:false, tags:true};
 let facets = {...defaults}, facetDraft = {...defaults};
 try {facets = {...defaults, ...JSON.parse(localStorage.getItem(storageKey('facets')) || '{}')};} catch {}
-const state = {page:'lineage', root:initialObject?.id || null, selected:initialObject?.id || null, up:1, down:1, all:false, explorerMode:'context', explorerKind:'all', kind:'all', catalogQuery:'', catalogSort:'kind', catalogTab:'all', catalogFolder:'all', visualMode:'all', detailTab:'overview', detailId:initialObject?.id || null, checksSeverity:'all', checksQuery:'', checksCategory:'all', checksKind:'all', checksRule:'all', checksSort:'severity', codeId:null, partition:0};
+const state = {page:'home', root:initialObject?.id || null, selected:initialObject?.id || null, up:1, down:1, all:false, explorerMode:'context', explorerKind:'all', kind:'all', catalogQuery:'', catalogSort:'kind', catalogTab:'all', catalogFolder:'all', visualMode:'all', detailTab:'overview', detailId:initialObject?.id || null, checksSeverity:'all', checksQuery:'', checksCategory:'all', checksKind:'all', checksRule:'all', checksSort:'severity', codeId:null, partition:0};
 const friendlyRules = {
     PQ_HARDCODED_LOCAL_PATHS:['Replace local file paths with reusable parameters','The query points to a file on one computer. Review whether a parameter or shared source would make it portable.'],
     VISIBLE_COLUMN_NO_DESCRIPTION:['Add descriptions to visible columns','Describe what each column means so report authors can choose the right field.'],
@@ -909,4 +909,4 @@ $('gate-status').textContent='Gate: '+(BPA.gate?.status||'Not evaluated');
 $('gate-status').classList.add(BPA.gate?.passed===true?'good':BPA.gate?.passed===false?'bad':'neutral');
 $('gate-status').onclick=()=>navigate('checks');
 $('catalog-total').textContent=DATA.nodes.length;
-setTheme(savedTheme);navigate('lineage');bindPins();
+setTheme(savedTheme);navigate('home');bindPins();
