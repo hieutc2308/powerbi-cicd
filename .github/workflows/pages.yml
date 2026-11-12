@@ -56,9 +56,16 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: dist/site/
+      - name: Upload standalone portal for private download
+        uses: actions/upload-artifact@v4
+        with:
+          name: portal-site
+          path: dist/site/
+          retention-days: 30
 
   deploy-portal:
     needs: build-portal
+    if: vars.ENABLE_GITHUB_PAGES == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: read

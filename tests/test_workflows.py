@@ -38,6 +38,9 @@ def test_pages_uses_a_clean_complete_site() -> None:
     assert any("--site dist/site" in step.get("run", "") for step in steps)
     upload = next(s for s in steps if "actions/upload-pages-artifact" in s.get("uses", ""))
     assert upload["with"]["path"] == "dist/site/"
+    portal = next(s for s in steps if s.get("with", {}).get("name") == "portal-site")
+    assert portal["with"]["path"] == "dist/site/"
+    assert "vars.ENABLE_GITHUB_PAGES == 'true'" in pages["jobs"]["deploy-portal"]["if"]
     for step in steps:
         if "run-local.ps1" in step.get("run", ""):
             assert "-Ticket" not in step["run"]

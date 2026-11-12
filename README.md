@@ -97,14 +97,14 @@ Never commit `.pbix`, `.pbi/cache.abf`, `.pbi/localSettings.json`, or `dist/`. G
 
 Severity 3 findings, invalid references, and rule evaluation errors fail the configured Advisory Gate; lower-severity findings remain visible. The stable **PBIP CI status** job combines test/discovery/matrix results, including changes with no affected tickets. Use this check for branch protection. PR summaries are posted only for same-repository pull requests; fork PRs still receive checks and artifacts without write access.
 
-`pages.yml` runs on `main` and manual dispatch. It tests the analyzer, freshly analyzes every current ticket, and publishes only `dist/site/`. BPA Gate failures remain visible on Pages; extraction/build failures stop publication. Pages publishes documentation, not reports to Power BI Service.
+`pages.yml` runs on `main` and manual dispatch. It tests the analyzer, freshly analyzes every current ticket, and uploads the standalone `portal-site` artifact. Download and extract it to open `index.html` locally. Deployment to GitHub Pages is disabled by default; BPA Gate failures remain visible in the portal, while extraction/build failures stop the build. Pages publishes documentation, not reports to Power BI Service.
 
 To activate this in GitHub:
 
 1. Push this repository and its workflow files to a GitHub repository with a `main` branch.
-2. Under **Settings → Pages → Build and deployment → Source**, choose **GitHub Actions**.
+2. To publish the portal, first verify your GitHub plan supports Pages for this repository and review the site's audience. Under **Settings → Pages → Build and deployment → Source**, choose **GitHub Actions**, then set repository variable `ENABLE_GITHUB_PAGES` to `true` under **Settings → Secrets and variables → Actions → Variables**. GitHub Pages may expose the generated portal publicly even when source access is restricted; the portal includes model definitions and other report metadata.
 3. Enable Actions as required by your organization and configure `PBIP CI status` as a required branch check after its first run.
-4. Push a test report branch and inspect the CI artifact before merging. After merging, check the Pages URL shown by the deployment job. The root lists tickets; each ticket links to its own v6 workspace.
+4. Push a test report branch and inspect the CI artifact before merging. Download `portal-site` from the portal workflow, or, when Pages deployment is enabled, check the URL shown by the deployment job. The root lists tickets; each ticket links to its own v6 workspace.
 
 These workflows do not deploy to Fabric/Power BI Service or write to Jira. Ticket keys currently organize folders, jobs, outputs, and links.
 
