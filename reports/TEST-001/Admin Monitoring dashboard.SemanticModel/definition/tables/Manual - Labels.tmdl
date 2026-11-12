@@ -1,0 +1,38 @@
+table 'Manual - Labels'
+	lineageTag: ddc5dc0f-3d48-4d8a-b46c-4d265d61dd61
+
+	column Value
+		lineageTag: 795fb86b-7828-4625-b877-a9026859969d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Value]
+		sortByColumn: Order
+
+		annotation SummarizationSetBy = Automatic
+
+	column Order
+		formatString: 0
+		lineageTag: f95c0e24-eb6b-48e4-877a-df4537b1a9d7
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Order]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Manual - Labels' = calculated
+		mode: import
+		source =
+				
+				DATATABLE(
+				    "Value", STRING,
+				    "Order", INTEGER,
+				    {
+				        {"Views", 1},
+				        {"Refreshes", 2},
+				        {"Exports", 3},
+				        {"Import", 4}
+				    }
+				)
+
+	annotation PBI_Id = 2abafa996bd54db3818f1f66523cfccb
+

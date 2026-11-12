@@ -1,0 +1,155 @@
+name: Power BI PBIP CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.tickets.outputs.matrix }}
+      has_projects: ${{ steps.tickets.outputs.has_projects }}
+      deleted: ${{ steps.tickets.outputs.deleted }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Select changed ticket projects
+        id: tickets
+        env:
+          PYTHONPATH: scripts
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: python -m pbi_cicd.cli --root . --matrix --base "$BASE_SHA" --head "$GITHUB_SHA" --github-output "$GITHUB_OUTPUT"
+
+  tests:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - name: Install test dependencies
+        shell: pwsh
+        run: |
+          python -m pip install uv
+          uv venv .venv
+          uv pip install --python .venv\Scripts\python.exe -e ".[dev]"
+      - name: Test independent PBIP fixtures and v6 UI
+        shell: pwsh
+        run: .venv\Scripts\python.exe -m pytest tests/ -v
+
+  analyze-and-gate:
+    needs: [discover, tests]
+    if: needs.discover.outputs.has_projects == 'true'
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.discover.outputs.matrix) }}
+    env:
+      TICKET: ${{ matrix.ticket }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Install analyzer
+        shell: pwsh
+        run: |
+          python -m pip install uv
+          uv venv .venv
+          uv pip install --python .venv\Scripts\python.exe -e .
+      - name: Set up TE2
+        id: te2
+        uses: ./.github/actions/setup-te2
+      - name: Analyze ticket with fresh TE2 metadata
+        shell: pwsh
+        env:
+          TE2_EXE: ${{ steps.te2.outputs.executable }}
+        run: .\scripts\run-local.ps1 -Ticket $env:TICKET -Te2Exe $env:TE2_EXE
+      - name: Upload ticket analysis results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: report-${{ matrix.ticket }}
+          path: dist/${{ matrix.ticket }}/
+          retention-days: 30
+          if-no-files-found: warn
+      - name: Enforce this ticket's Advisory Gate
+        shell: pwsh
+        run: .venv\Scripts\python.exe -m pbi_cicd.cli --root . --ticket $env:TICKET --check-gates
+
+  ci-status:
+    name: PBIP CI status
+    needs: [discover, tests, analyze-and-gate]
+    if: always()
+    runs-on: ubuntu-latest
+    env:
+      DISCOVERY_RESULT: ${{ needs.discover.result }}
+      TEST_RESULT: ${{ needs.tests.result }}
+      ANALYSIS_RESULT: ${{ needs.analyze-and-gate.result }}
+      HAS_PROJECTS: ${{ needs.discover.outputs.has_projects }}
+    steps:
+      - name: Require successful tests and affected ticket gates
+        run: |
+          test "$DISCOVERY_RESULT" = success
+          test "$TEST_RESULT" = success
+          if [ "$HAS_PROJECTS" = true ]; then
+            test "$ANALYSIS_RESULT" = success
+          else
+            test "$ANALYSIS_RESULT" = skipped
+          fi
+
+  pr-summary:
+    needs: [discover, tests, analyze-and-gate]
+    if: always() && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && needs.discover.result == 'success'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
+      pull-requests: write
+    steps:
+      - name: Download ticket artifacts
+        if: needs.discover.outputs.has_projects == 'true'
+        continue-on-error: true
+        uses: actions/download-artifact@v5
+        with:
+          pattern: report-*
+          path: ticket-results
+      - name: Post combined ticket summary
+        uses: actions/github-script@v7
+        env:
+          DELETED_TICKETS: ${{ needs.discover.outputs.deleted }}
+          MATRIX_JSON: ${{ needs.discover.outputs.matrix }}
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            const marker = '<!-- pbi-cicd-summary -->';
+            const selected = JSON.parse(process.env.MATRIX_JSON || '{"include":[]}').include;
+            const deleted = JSON.parse(process.env.DELETED_TICKETS || '[]');
+            const sections = selected.map(({ticket}) => {
+              const file = path.join('ticket-results', `report-${ticket}`, 'pr-summary.md');
+              return `## ${ticket}\n\n` + (fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : 'No analysis report was generated. Check the ticket job logs.');
+            });
+            if (deleted.length) sections.push('Removed tickets: ' + deleted.join(', '));
+            if (!sections.length) sections.push('No report tickets were affected by this change.');
+            const body = marker + '\n' + sections.join('\n\n');
+            const {owner, repo} = context.repo;
+            const issue_number = context.issue.number;
+            const comments = await github.paginate(github.rest.issues.listComments, {owner, repo, issue_number});
+            const previous = comments.find(c => c.user?.type === 'Bot' && c.body?.includes(marker));
+            if (previous) await github.rest.issues.updateComment({owner, repo, comment_id: previous.id, body});
+            else await github.rest.issues.createComment({owner, repo, issue_number, body});

@@ -1,0 +1,27 @@
+table 'Last Refresh'
+	lineageTag: 9ad78074-6924-4578-879b-48b7f4675e5b
+
+	column Time
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: b37b5886-7f55-4380-b906-2eac84b77b39
+		summarizeBy: none
+		sourceColumn: Time
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Last Refresh' = m
+		mode: import
+		source =
+				let
+				    Source = DateTimeZone.UtcNow(),
+				    #"Converted to Table" = #table(1, {{Source}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Converted to Table",{{"Column1", type datetime}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"Column1", "Time"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

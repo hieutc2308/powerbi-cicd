@@ -1,0 +1,13 @@
+EVALUATE
+VAR deploy_table =
+	FILTER(
+		'Activity Events',
+		'Activity Events'[Operation] = "BindToGateway"
+	)
+VAR table_group =
+	RANKX(
+		ALL(deploy_table),
+		MIN('Activity Events'[Date])
+	)
+RETURN
+	table_group

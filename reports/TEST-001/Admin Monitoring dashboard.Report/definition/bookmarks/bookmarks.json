@@ -1,0 +1,60 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmarksMetadata/1.0.0/schema.json",
+  "items": [
+    {
+      "name": "2f12a3b19f6b6e536188"
+    },
+    {
+      "name": "dbf6414cc7a30c6bd49e"
+    },
+    {
+      "name": "80aa592b5d23e57a0190"
+    },
+    {
+      "name": "9cad07043e1e0937b27e"
+    },
+    {
+      "name": "8cb6697234e9ec071c33"
+    },
+    {
+      "name": "f206713e6c1d0e0069a0"
+    },
+    {
+      "name": "4436c2fe5b8c9a99a710"
+    },
+    {
+      "name": "d42e0e07b63e1a85eefd"
+    },
+    {
+      "name": "e9ace63fd901e3bb0668"
+    },
+    {
+      "name": "ff90aaf185aa59869668",
+      "displayName": "Refresh chart",
+      "children": [
+        "da44273226c951e20c85",
+        "d1c7ffd0026776a3593a"
+      ]
+    },
+    {
+      "name": "a5259fff5c0420c535c7",
+      "displayName": "View chart",
+      "children": [
+        "8c222b939bb3c147627c",
+        "e1219997b2b98d54dcdb"
+      ]
+    },
+    {
+      "name": "fbb831d19032cddc2c46"
+    },
+    {
+      "name": "5b940d932716e5baad45"
+    },
+    {
+      "name": "f546a6adc1110c30da4b"
+    },
+    {
+      "name": "bfd94729807c28a6ec96"
+    }
+  ]
+}

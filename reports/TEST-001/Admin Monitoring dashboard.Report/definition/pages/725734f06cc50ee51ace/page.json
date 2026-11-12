@@ -1,0 +1,177 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "725734f06cc50ee51ace",
+  "displayName": "Refreshes",
+  "displayOption": "FitToPage",
+  "height": 1100,
+  "width": 1600,
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "1d78b903dcce4cec70ea",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "FactActivity_Events"
+              }
+            },
+            "Property": "artifact_kind"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "User"
+      }
+    ]
+  },
+  "objects": {
+    "background": [
+      {
+        "properties": {
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          },
+          "image": {
+            "image": {
+              "name": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'Refreshables.png'"
+                  }
+                }
+              },
+              "url": {
+                "expr": {
+                  "ResourcePackageItem": {
+                    "PackageName": "RegisteredResources",
+                    "PackageType": 1,
+                    "ItemName": "Refreshables22835589253885002.png"
+                  }
+                }
+              },
+              "scaling": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'Fit'"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "outspacePane": [
+      {
+        "properties": {
+          "borderColor": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#586D5C'"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "filterCard": [
+      {
+        "properties": {
+          "borderColor": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "ThemeDataColor": {
+                    "ColorId": 7,
+                    "Percent": -0.25
+                  }
+                }
+              }
+            }
+          },
+          "backgroundColor": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "ThemeDataColor": {
+                    "ColorId": 3,
+                    "Percent": -0.25
+                  }
+                }
+              }
+            }
+          },
+          "foregroundColor": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "ThemeDataColor": {
+                    "ColorId": 0,
+                    "Percent": 0
+                  }
+                }
+              }
+            }
+          }
+        },
+        "selector": {
+          "id": "Applied"
+        }
+      },
+      {
+        "properties": {
+          "borderColor": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#586D5C'"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "selector": {
+          "id": "Available"
+        }
+      }
+    ]
+  },
+  "visibility": "HiddenInViewMode",
+  "visualInteractions": [
+    {
+      "source": "e834df3be564a74e032b",
+      "target": "8994c3d1d187568a2ba3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "8994c3d1d187568a2ba3",
+      "target": "1a5d46918e8adb950609",
+      "type": "NoFilter"
+    },
+    {
+      "source": "8994c3d1d187568a2ba3",
+      "target": "271642fd3c0c91c5ce51",
+      "type": "NoFilter"
+    },
+    {
+      "source": "8994c3d1d187568a2ba3",
+      "target": "e834df3be564a74e032b",
+      "type": "NoFilter"
+    },
+    {
+      "source": "8994c3d1d187568a2ba3",
+      "target": "8a295216b75ac30725e0",
+      "type": "NoFilter"
+    }
+  ]
+}

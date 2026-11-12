@@ -1,0 +1,395 @@
+[
+  {
+    "ID": "DAX_COLUMNS_FULLY_QUALIFIED",
+    "Name": "[DAX Expressions] Column references should be fully qualified",
+    "Category": "DAX Expressions",
+    "Description": "Always qualify column references as 'Table'[Column] in measures, KPIs, RLS expressions, and calculation items to distinguish columns from measures and avoid context ambiguity.",
+    "Severity": 3,
+    "Scope": "Measure, KPI, TablePermission, CalculationItem",
+    "Expression": "DependsOn.Any(Key.ObjectType = \"Column\" and Value.Any(not FullyQualified))",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "DAX_MEASURES_UNQUALIFIED",
+    "Name": "[DAX Expressions] Measure references should be unqualified",
+    "Category": "DAX Expressions",
+    "Description": "Always reference measures as [Measure] without a table prefix so measures remain clearly distinguishable from columns.",
+    "Severity": 3,
+    "Scope": "Measure, CalculatedColumn, CalculatedTable, KPI, CalculationItem",
+    "Expression": "DependsOn.Any(Key.ObjectType = \"Measure\" and Value.Any(FullyQualified))",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "RELATIONSHIP_COLUMNS_SAME_DATA_TYPE",
+    "Name": "[Error Prevention] Relationship columns should be of the same data type",
+    "Category": "Error Prevention",
+    "Description": "Columns on both sides of a relationship should share the same data type to avoid join mismatches or conversion overhead.",
+    "Severity": 3,
+    "Scope": "Relationship",
+    "Expression": "FromColumn.DataType != ToColumn.DataType",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "AVOID_THE_USERELATIONSHIP_FUNCTION_AND_RLS_AGAINST_THE_SAME_TABLE",
+    "Name": "[Error Prevention] Avoid USERELATIONSHIP and RLS against the same table",
+    "Category": "Error Prevention",
+    "Description": "Using USERELATIONSHIP on a table that also enforces Row-Level Security causes query errors in Power BI.",
+    "Severity": 3,
+    "Scope": "Table, CalculatedTable",
+    "Expression": "Model.AllMeasures.Any(RegEx.IsMatch(Expression,\"(?i)USERELATIONSHIP\\s*\\(\\s*.+?(?=])\\]\\s*,\\s*'*\" + current.Name + \"'*\\[\")) and RowLevelSecurity.Any(it <> null)",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "AVOID_M2M_RELATIONSHIPS_ON_DYNAMIC_RLS_TABLES",
+    "Name": "[Performance] Avoid many-to-many relationships on tables with dynamic RLS",
+    "Category": "Performance",
+    "Description": "Many-to-many relationships combined with dynamic Row-Level Security severely degrade query performance.",
+    "Severity": 3,
+    "Scope": "Table",
+    "Expression": "UsedInRelationships.Any(FromCardinality == \"Many\" and ToCardinality == \"Many\") and RowLevelSecurity.Any(it.Length > 0)",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "AVOID_INVALID_NAME_CHARACTERS",
+    "Name": "[Error Prevention] Avoid invalid control characters in object names",
+    "Category": "Error Prevention",
+    "Description": "Control characters in model object names cause deployment failures.",
+    "Severity": 3,
+    "Scope": "Table, Measure, Hierarchy, Level, Perspective, Partition, DataColumn, CalculatedColumn, CalculatedTable, CalculatedTableColumn, KPI, ModelRole, CalculationGroup, CalculationItem",
+    "Expression": "Name.ToCharArray().Any(char.IsControl(it) and !char.IsWhiteSpace(it))",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "DATA_COLUMNS_MUST_HAVE_A_SOURCE_COLUMN",
+    "Name": "[Error Prevention] Data columns must have a source column",
+    "Category": "Error Prevention",
+    "Description": "Every physical DataColumn must map to a valid SourceColumn.",
+    "Severity": 3,
+    "Scope": "DataColumn",
+    "Expression": "string.IsNullOrWhitespace(SourceColumn)",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "EXPRESSION_RELIANT_OBJECTS_MUST_HAVE_AN_EXPRESSION",
+    "Name": "[Error Prevention] Expression-reliant objects must have an expression",
+    "Category": "Error Prevention",
+    "Description": "Measures, calculated columns, and calculation items cannot have blank DAX expressions.",
+    "Severity": 3,
+    "Scope": "Measure, CalculatedColumn, CalculationItem",
+    "Expression": "string.IsNullOrWhiteSpace(Expression)",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "EVALUATEANDLOG_SHOULD_NOT_BE_USED_IN_PRODUCTION_MODELS",
+    "Name": "[DAX Expressions] Remove EVALUATEANDLOG from production models",
+    "Category": "DAX Expressions",
+    "Description": "EVALUATEANDLOG is a debug function and should not remain in production semantic models.",
+    "Severity": 3,
+    "Scope": "Measure",
+    "Expression": "RegEx.IsMatch(Expression,\"(?i)EVALUATEANDLOG\\s*\\(\")",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "MODEL_SHOULD_HAVE_A_DATE_TABLE",
+    "Name": "[Performance] Model should have a marked Date table",
+    "Category": "Performance",
+    "Description": "Models should include a Date table marked with DataCategory = Time and a DateTime key column.",
+    "Severity": 2,
+    "Scope": "Model",
+    "Expression": "Tables.Any(DataCategory == \"Time\" && Columns.Any(IsKey == true && DataType == \"DateTime\")) == false",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "DATE_CALENDAR_TABLES_MARKED_AS_DATE_TABLE",
+    "Name": "[Performance] Date/Calendar tables should be marked as a Date table",
+    "Category": "Performance",
+    "Description": "Tables named Date or Calendar should be marked as a Date table (DataCategory = Time + DateTime key column).",
+    "Severity": 2,
+    "Scope": "Table, CalculatedTable",
+    "Expression": "(Name.ToUpper().Contains(\"DATE\") or Name.ToUpper().Contains(\"CALENDAR\")) and (DataCategory <> \"Time\" or Columns.Any(IsKey == true && DataType == \"DateTime\") == false)",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "REMOVE_AUTO_DATE_TABLE",
+    "Name": "[Performance] Remove auto-date/time hidden tables",
+    "Category": "Performance",
+    "Description": "Disable Auto Date/Time in Power BI Desktop to eliminate hidden DateTableTemplate and LocalDateTable bloat.",
+    "Severity": 2,
+    "Scope": "Table, CalculatedTable",
+    "Expression": "Name.StartsWith(\"DateTableTemplate_\") or Name.StartsWith(\"LocalDateTable_\")",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "SNOWFLAKE_SCHEMA_ARCHITECTURE",
+    "Name": "[Performance] Consider a star schema instead of snowflake chains",
+    "Category": "Performance",
+    "Description": "Tables acting as both FromTable and ToTable in relationships create snowflake chains; evaluate flattening dimensions into a star schema.",
+    "Severity": 2,
+    "Scope": "Table, CalculatedTable",
+    "Expression": "UsedInRelationships.Any(current.Name == FromTable.Name) and UsedInRelationships.Any(current.Name == ToTable.Name)",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "AVOID_EXCESSIVE_BIDIRECTIONAL_OR_M2M_RELATIONSHIPS",
+    "Name": "[Performance] Avoid excessive bi-directional or many-to-many relationships",
+    "Category": "Performance",
+    "Description": "Keep bi-directional and many-to-many relationships below 30% of total model relationships to prevent ambiguity and slow queries.",
+    "Severity": 2,
+    "Scope": "Model",
+    "Expression": "(Relationships.Where(CrossFilteringBehavior == CrossFilteringBehavior.BothDirections).Count() + Relationships.Where(FromCardinality.ToString() == \"Many\" && ToCardinality.ToString() == \"Many\").Count()) / Math.Max(Convert.ToDecimal(Relationships.Count), 1) > 0.3",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "M2M_RELATIONSHIPS_SINGLE_DIRECTION",
+    "Name": "[Performance] Many-to-many relationships should be single-direction",
+    "Category": "Performance",
+    "Description": "Prefer single-direction cross-filtering on many-to-many relationships unless bi-directional propagation is strictly required.",
+    "Severity": 2,
+    "Scope": "Relationship",
+    "Expression": "FromCardinality == \"Many\" and ToCardinality == \"Many\" and CrossFilteringBehavior == \"BothDirections\"",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "ISAVAILABLEINMDX_FALSE_NONATTRIBUTE_COLUMNS",
+    "Name": "[Performance] Set IsAvailableInMdx to false on hidden non-attribute columns",
+    "Category": "Performance",
+    "Description": "Hidden columns not used in SortBy or hierarchies should set IsAvailableInMDX = false to reduce memory and processing time.",
+    "Severity": 2,
+    "Scope": "DataColumn, CalculatedColumn, CalculatedTableColumn",
+    "Expression": "IsAvailableInMDX and (IsHidden or Table.IsHidden) and not UsedInSortBy.Any() and not UsedInHierarchies.Any() and not UsedInVariations.Any() and SortByColumn = null",
+    "FixExpression": "IsAvailableInMDX = false",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "REDUCE_USAGE_OF_CALCULATED_COLUMNS_THAT_USE_THE_RELATED_FUNCTION",
+    "Name": "[Performance] Reduce calculated columns using RELATED",
+    "Category": "Performance",
+    "Description": "Calculated columns using RELATED() can often be replaced by model relationships or Power Query merges at refresh time for better compression.",
+    "Severity": 2,
+    "Scope": "CalculatedColumn",
+    "Expression": "RegEx.IsMatch(Expression,\"(?i)RELATED\\s*\\(\")",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "REDUCE_NUMBER_OF_CALCULATED_COLUMNS",
+    "Name": "[Performance] Reduce number of DAX calculated columns",
+    "Category": "Performance",
+    "Description": "Excessive DAX calculated columns reduce VertiPaq compression and lengthen recalc times; move upstream transformations to Power Query or the data warehouse.",
+    "Severity": 2,
+    "Scope": "Model",
+    "Expression": "AllColumns.Where(Type.ToString() == \"Calculated\").Count() > 5",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "AVOID_FLOATING_POINT_DATA_TYPES",
+    "Name": "[Performance] Avoid Double floating point data types",
+    "Category": "Performance",
+    "Description": "Double columns can introduce rounding artifacts; use Int64 or Decimal (Fixed Decimal) where precision allows.",
+    "Severity": 2,
+    "Scope": "DataColumn, CalculatedColumn, CalculatedTableColumn",
+    "Expression": "DataType = \"Double\"",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "NUMERIC_COLUMN_SUMMARIZE_BY",
+    "Name": "[Formatting] Do not auto-summarize visible numeric columns",
+    "Category": "Formatting",
+    "Description": "Set SummarizeBy = None on visible numeric columns so report authors use explicit DAX measures instead of implicit aggregations.",
+    "Severity": 2,
+    "Scope": "DataColumn, CalculatedColumn, CalculatedTableColumn",
+    "Expression": "(DataType = \"Int64\" or DataType = \"Decimal\" or DataType = \"Double\") and SummarizeBy <> \"None\" and not (IsHidden or Table.IsHidden)",
+    "FixExpression": "SummarizeBy = AggregateFunction.None",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "HIDE_FOREIGN_KEYS",
+    "Name": "[Formatting] Hide foreign key columns",
+    "Category": "Formatting",
+    "Description": "Many-side relationship foreign keys should be hidden so authors slice via dimension tables.",
+    "Severity": 2,
+    "Scope": "DataColumn, CalculatedColumn, CalculatedTableColumn",
+    "Expression": "UsedInRelationships.Any(FromColumn.Name == current.Name and FromCardinality == \"Many\") and IsHidden == false",
+    "FixExpression": "IsHidden = true",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "USE_THE_DIVIDE_FUNCTION_FOR_DIVISION",
+    "Name": "[DAX Expressions] Use DIVIDE() instead of / operator",
+    "Category": "DAX Expressions",
+    "Description": "Use DIVIDE(numerator, denominator) to safely handle divide-by-zero cases.",
+    "Severity": 2,
+    "Scope": "Measure, CalculatedColumn, CalculationItem",
+    "Expression": "RegEx.IsMatch(Expression,\"\\]\\s*\\/(?!\\/)(?!\\*)\") or RegEx.IsMatch(Expression,\"\\)\\s*\\/(?!\\/)(?!\\*)\")",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "AVOID_USING_THE_IFERROR_FUNCTION",
+    "Name": "[DAX Expressions] Avoid IFERROR in DAX expressions",
+    "Category": "DAX Expressions",
+    "Description": "IFERROR forces row-by-row error trapping and degrades performance; use DIVIDE() or explicit ISBLANK/type guards.",
+    "Severity": 2,
+    "Scope": "Measure, CalculatedColumn",
+    "Expression": "RegEx.IsMatch(Expression,\"(?i)IFERROR\\s*\\(\")",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "FILTER_COLUMN_VALUES",
+    "Name": "[DAX Expressions] Avoid FILTER(Table, ...) inside CALCULATE",
+    "Category": "DAX Expressions",
+    "Description": "Replace CALCULATE(..., FILTER('Table', 'Table'[Col] = ...)) with direct column predicates or KEEPFILTERS() to avoid scanning full tables.",
+    "Severity": 2,
+    "Scope": "Measure, CalculatedColumn, CalculationItem",
+    "Expression": "RegEx.IsMatch(Expression,\"(?i)CALCULATE\\s*\\(\\s*[^,]+,\\s*FILTER\\s*\\(\\s*'*[A-Za-z0-9 _]+'*,\\s*'*[A-Za-z0-9 _]+'*\\[[A-Za-z0-9 _]+\\]\") or RegEx.IsMatch(Expression,\"(?i)CALCULATETABLE\\s*\\([^,]*,\\s*FILTER\\s*\\(\\s*'*[A-Za-z0-9 _]+'*,\\s*'*[A-Za-z0-9 _]+'*\\[[A-Za-z0-9 _]+\\]\")",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "FILTER_MEASURE_VALUES_BY_COLUMNS",
+    "Name": "[DAX Expressions] Filter measure values by columns, not whole tables",
+    "Category": "DAX Expressions",
+    "Description": "Use FILTER(VALUES('Table'[Col]), [Measure] > 0) instead of FILTER('Table', [Measure] > 0) inside CALCULATE.",
+    "Severity": 2,
+    "Scope": "Measure, CalculatedColumn, CalculationItem",
+    "Expression": "RegEx.IsMatch(Expression,\"(?i)CALCULATE\\s*\\(\\s*[^,]+,\\s*FILTER\\s*\\(\\s*'*[A-Za-z0-9 _]+'*,\\s*\\[[^\\]]+\\]\") or RegEx.IsMatch(Expression,\"(?i)CALCULATETABLE\\s*\\([^,]*,\\s*FILTER\\s*\\(\\s*'*[A-Za-z0-9 _]+'*,\\s*\\[\")",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "AVOID_DUPLICATE_MEASURES",
+    "Name": "[DAX Expressions] Avoid duplicate measure definitions",
+    "Category": "DAX Expressions",
+    "Description": "Two measures sharing identical normalized DAX expressions create maintenance ambiguity.",
+    "Severity": 2,
+    "Scope": "Measure",
+    "Expression": "Model.AllMeasures.Any(Expression.Replace(\" \",\"\").Replace(\"\\n\",\"\").Replace(\"\\r\",\"\").Replace(\"\\t\",\"\") = outerIt.Expression.Replace(\" \",\"\").Replace(\"\\n\",\"\").Replace(\"\\r\",\"\").Replace(\"\\t\",\"\") and it <> outerIt)",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "MEASURES_SHOULD_NOT_BE_DIRECT_REFERENCES_OF_OTHER_MEASURES",
+    "Name": "[DAX Expressions] Measures should not simply alias another measure",
+    "Category": "DAX Expressions",
+    "Description": "Remove redundant wrapper measures whose entire expression is just [OtherMeasure].",
+    "Severity": 2,
+    "Scope": "Measure",
+    "Expression": "Model.AllMeasures.Any(DaxObjectName == current.Expression)",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "INACTIVE_RELATIONSHIPS_THAT_ARE_NEVER_ACTIVATED",
+    "Name": "[DAX Expressions] Inactive relationships never activated via USERELATIONSHIP",
+    "Category": "DAX Expressions",
+    "Description": "Inactive relationships not referenced by USERELATIONSHIP in any measure or calculation item may be dead model metadata.",
+    "Severity": 2,
+    "Scope": "Relationship",
+    "Expression": "IsActive == false and not (Model.AllMeasures.Any(RegEx.IsMatch(Expression,\"(?i)USERELATIONSHIP\\s*\\(\\s*'*\" + current.FromTable.Name + \"'*\\[\" + current.FromColumn.Name + \"\\]\\s*,\\s*'*\" + current.ToTable.Name + \"'*\\[\" + current.ToColumn.Name + \"\\]\")) or Model.AllCalculationItems.Any(RegEx.IsMatch(Expression,\"(?i)USERELATIONSHIP\\s*\\(\\s*'*\" + current.FromTable.Name + \"'*\\[\" + current.FromColumn.Name + \"\\]\\s*,\\s*'*\" + current.ToTable.Name + \"'*\\[\" + current.ToColumn.Name + \"\\]\")))",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "PROVIDE_FORMAT_STRING_FOR_NUMERIC_MEASURES",
+    "Name": "[Formatting] Provide format string for visible numeric measures",
+    "Category": "Formatting",
+    "Description": "Visible numeric measures should define a FormatString (excludes ImageUrl and pure string-literal title measures).",
+    "Severity": 2,
+    "Scope": "Measure",
+    "Expression": "not IsHidden and not Table.IsHidden and string.IsNullOrWhitespace(FormatString) and DataCategory <> \"ImageUrl\" and not RegEx.IsMatch(Expression, \"(?is)^\\s*\\x22\")",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "PQ_AVOID_TABLE_NESTEDJOIN",
+    "Name": "[Power Query] Avoid Table.NestedJoin in Power Query",
+    "Category": "Performance",
+    "Description": "Table.NestedJoin is expensive in Power Query import models; prefer upstream database joins or semantic model relationships.",
+    "Severity": 2,
+    "Scope": "Partition, NamedExpression",
+    "Expression": "Expression.Contains(\"Table.NestedJoin\")",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "PQ_AVOID_TABLE_JOIN",
+    "Name": "[Power Query] Avoid Table.Join in Power Query",
+    "Category": "Performance",
+    "Description": "Table.Join inside Power Query can break query folding and slow refreshes; push joins upstream where possible.",
+    "Severity": 2,
+    "Scope": "Partition, NamedExpression",
+    "Expression": "Expression.Contains(\"Table.Join\")",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "PQ_AVOID_FUZZY_JOINS",
+    "Name": "[Power Query] Avoid fuzzy joins in Power Query",
+    "Category": "Performance",
+    "Description": "Table.FuzzyJoin and Table.FuzzyNestedJoin are CPU-intensive and non-foldable.",
+    "Severity": 2,
+    "Scope": "Partition, NamedExpression",
+    "Expression": "Expression.Contains(\"Table.FuzzyJoin\") or Expression.Contains(\"Table.FuzzyNestedJoin\")",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "PQ_AVOID_TABLE_DISTINCT",
+    "Name": "[Power Query] Review Table.Distinct in Power Query",
+    "Category": "Maintenance",
+    "Description": "Table.Distinct can silently mask upstream duplicate key issues and hinder query folding.",
+    "Severity": 2,
+    "Scope": "Partition, NamedExpression",
+    "Expression": "Expression.Contains(\"Table.Distinct\")",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "PQ_AVOID_REMOVE_DUPLICATES",
+    "Name": "[Power Query] Review Table.RemoveDuplicates in Power Query",
+    "Category": "Maintenance",
+    "Description": "Table.RemoveDuplicates in M may indicate uncleaned source keys or non-deterministic deduplication.",
+    "Severity": 2,
+    "Scope": "Partition, NamedExpression",
+    "Expression": "Expression.Contains(\"Table.RemoveDuplicates\")",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "PQ_HARDCODED_LOCAL_PATHS",
+    "Name": "[Power Query] Avoid hardcoded local file paths in M queries",
+    "Category": "Governance",
+    "Description": "Hardcoded local drive or user-profile paths (C:\\, D:\\, Users\\) break scheduled refreshes in Power BI Service / Fabric. Parameterize via SharePoint/OneLake/cloud connectors.",
+    "Severity": 2,
+    "Scope": "Partition, NamedExpression",
+    "Expression": "RegEx.IsMatch(Expression, \"(?i)([A-Z]:\\\\|Users\\\\)\")",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "MEASURE_NO_DESCRIPTION",
+    "Name": "[Metadata] Visible measures should have a description",
+    "Category": "Metadata",
+    "Description": "Add concise business descriptions to visible measures to improve maintainability and Copilot/Q&A accuracy.",
+    "Severity": 1,
+    "Scope": "Measure",
+    "Expression": "not IsHidden and not Table.IsHidden and string.IsNullOrWhitespace(Description)",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "VISIBLE_COLUMN_NO_DESCRIPTION",
+    "Name": "[Metadata] Visible columns should have a description",
+    "Category": "Metadata",
+    "Description": "Document visible columns so report builders and Copilot understand field semantics.",
+    "Severity": 1,
+    "Scope": "DataColumn, CalculatedColumn, CalculatedTableColumn",
+    "Expression": "not IsHidden and not Table.IsHidden and string.IsNullOrWhitespace(Description)",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "MEASURE_NO_DISPLAY_FOLDER",
+    "Name": "[Metadata] Measures should be organized in Display Folders",
+    "Category": "Metadata",
+    "Description": "Assign DisplayFolder values to measures to keep large measure tables organized.",
+    "Severity": 1,
+    "Scope": "Measure",
+    "Expression": "not IsHidden and string.IsNullOrWhitespace(DisplayFolder)",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "DESCRIPTION_EXCEEDS_COPILOT_200_CHARS",
+    "Name": "[Metadata] Keep object descriptions concise (<= 200 chars)",
+    "Category": "Metadata",
+    "Description": "Descriptions longer than 200 characters risk truncation in tooltips and AI metadata context.",
+    "Severity": 1,
+    "Scope": "Table, Measure, DataColumn, CalculatedColumn",
+    "Expression": "not string.IsNullOrWhitespace(Description) and Description.Length > 200",
+    "CompatibilityLevel": 1200
+  }
+]

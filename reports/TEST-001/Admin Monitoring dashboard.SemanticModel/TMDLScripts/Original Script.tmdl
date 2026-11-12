@@ -1,0 +1,791 @@
+createOrReplace
+
+	table Measure
+		lineageTag: f32bed3e-87e4-4deb-aa0b-f2e123ec920f
+
+		measure Baseline = ```
+				0
+				    
+				```
+			formatString: 0
+			displayFolder: Dummy
+			lineageTag: d35e830c-02b2-4aee-9034-02afc0159814
+
+		measure 'Active Users' = ```
+				
+				VAR range = 'Manual - Active threshold'[LastNdays]
+				VAR cutoff_date = UTCTODAY() - range
+				
+				VAR result = 
+				    CALCULATE(
+				        DISTINCTCOUNT(FactActivity_Events[user_id]),
+				        FILTER(
+				            FactActivity_Events,
+				            'FactActivity_Events'[creation_time] >= cutoff_date
+				            && NOT ISBLANK('FactActivity_Events'[creation_time])
+				        )
+				    )
+				RETURN
+				    result
+				```
+			formatString: 0
+			displayFolder: 1. Overview\KPI cards
+			lineageTag: 208e34df-c2eb-477c-ab70-94e7159d791a
+
+		measure 'Model Refresh' = MAXX(ALL(FactActivity_Events),FactActivity_Events[Date])
+			formatString: General Date
+			lineageTag: 6d48869c-1309-4dd6-8fde-c05541ed001e
+
+		measure 'Total activities' = ```
+				
+				    COALESCE(
+				        COUNTROWS('FactActivity_Events'),
+				        0)
+				```
+			formatString: #,0
+			displayFolder: Metrics
+			lineageTag: e2387b4f-da0e-4d3a-a8d4-ac37e2459e00
+
+		measure 'Active Capacities' = ```
+				
+				VAR range = 'Manual - Active threshold'[LastNdays]
+				VAR cutoff_date = UTCTODAY() - range
+				
+				VAR result = 
+				    CALCULATE(
+				        DISTINCTCOUNT(FactActivity_Events[capacity_id]),
+				        FILTER(
+				            FactActivity_Events,
+				            'FactActivity_Events'[creation_time] >= cutoff_date
+				            && NOT ISBLANK('FactActivity_Events'[creation_time])
+				        )
+				    )
+				RETURN
+				    result
+				    
+				```
+			formatString: 0
+			displayFolder: 1. Overview\KPI cards
+			lineageTag: 97ad5e89-099d-4788-8346-4c0283dfe81c
+
+		measure 'Active Workspaces' = ```
+				
+				VAR range = 'Manual - Active threshold'[LastNdays]
+				VAR cutoff_date = UTCTODAY() - range
+				
+				VAR result = 
+				    CALCULATE(
+				        DISTINCTCOUNT(FactActivity_Events[workspace_id]),
+				        FILTER(
+				            FactActivity_Events,
+				            'FactActivity_Events'[creation_time] >= cutoff_date
+				            && NOT ISBLANK('FactActivity_Events'[creation_time])
+				        )
+				    )
+				RETURN
+				    result
+				```
+			formatString: 0
+			displayFolder: 1. Overview\KPI cards
+			lineageTag: 997c39f9-c5c6-4f32-acae-f32d595857b0
+
+		measure 'Active Dashboards / Reports' = ```
+				
+				VAR range = 'Manual - Active threshold'[LastNdays]
+				VAR cutoff_date = UTCTODAY() - range
+				
+				VAR result = 
+				    CALCULATE(
+				        DISTINCTCOUNT(FactActivity_Events[dataset_id]),
+				        FILTER(
+				            FactActivity_Events,
+				            'FactActivity_Events'[creation_time] >= cutoff_date
+				            && NOT ISBLANK('FactActivity_Events'[creation_time])
+				        )
+				    )
+				RETURN
+				    result
+				```
+			formatString: 0
+			displayFolder: 1. Overview\KPI cards
+			lineageTag: 3fd5e9c4-8d86-4020-b9c3-aa8e528fd92a
+
+		measure 'Operation Rank' = ```
+				RANKX(
+				    ALLSELECTED('FactActivity_Events'[operation]),
+				    [Total activities]
+				)
+				    
+				```
+			formatString: 0
+			displayFolder: 1. Overview\KPI rank bar chart
+			lineageTag: 76743813-9bd7-4b7d-b9ba-528d461eeff6
+
+		measure 'Operation Rank - Baseline' =
+				
+				VAR result =
+				    MAXX(
+				        ALLSELECTED(FactActivity_Events[operation]),
+				        [Total activities]
+				    )
+				RETURN
+				    result / 3
+			formatString: 0.0
+			displayFolder: 1. Overview\KPI rank bar chart
+			lineageTag: 69627df2-60fe-470c-872d-b520d1d625c9
+
+		measure 'Operation Rank - Label' = ```
+				"# " & [Operation Rank]
+				    
+				```
+			displayFolder: 1. Overview\KPI rank bar chart
+			lineageTag: 4cc9385c-e485-4d8f-bb0f-6b25c8a2afba
+
+		measure 'Workspace Rank' = ```
+				RANKX(
+				    ALLSELECTED('FactActivity_Events'[workspace_name]),
+				    [Total activities]
+				)
+				    
+				```
+			formatString: 0
+			displayFolder: 1. Overview\KPI rank bar chart
+			lineageTag: ad5e0485-7e74-422e-965d-c4be6c1ae210
+
+		measure 'Workspace Rank - Label' = ```
+				"# " & [Workspace Rank]
+				    
+				```
+			displayFolder: 1. Overview\KPI rank bar chart
+			lineageTag: 19a8336e-60b2-47d5-9458-3f66ccde7e12
+
+		measure 'Workspace Rank - Baseline' =
+				
+				VAR result =
+				    MAXX(
+				        ALLSELECTED(FactActivity_Events[workspace_name]),
+				        [Total activities]
+				    )
+				RETURN
+				    result / 3
+			formatString: 0.0
+			displayFolder: 1. Overview\KPI rank bar chart
+			lineageTag: 47398d27-2ce2-4f43-9ccc-5bdea903facc
+
+		measure 'User Rank - Baseline' =
+				
+				VAR result =
+				    MAXX(
+				        ALLSELECTED(FactActivity_Events[User UPN]),
+				        [Total activities]
+				    )
+				RETURN
+				    result / 2.5
+			formatString: 0.0
+			displayFolder: 1. Overview\KPI rank bar chart
+			lineageTag: 7e528ea3-f457-4ac3-ba9d-766787518506
+
+		measure 'User Rank' =
+				
+				RANKX(
+				    ALLSELECTED('FactActivity_Events'[User UPN]),
+				    [Total activities]
+				)
+			formatString: 0
+			displayFolder: 1. Overview\KPI rank bar chart
+			lineageTag: 4c2b2e66-12d5-49e6-9f1e-ee1969d595a7
+
+		measure 'User Rank - Label' = ```
+				"# " & [User Rank]
+				    
+				```
+			displayFolder: 1. Overview\KPI rank bar chart
+			lineageTag: 257346d9-3221-489e-aa72-864b8372c989
+
+		measure 'Capacity Rank - Baseline' =
+				
+				VAR result =
+				    MAXX(
+				        ALLSELECTED(FactActivity_Events[capacity_name]),
+				        [Total activities]
+				    )
+				RETURN
+				    result / 2.5
+			formatString: 0.0
+			displayFolder: 1. Overview\KPI rank bar chart
+			lineageTag: 00de4632-8940-45be-af9c-d549b2de4acd
+
+		measure 'Capacity Rank' = ```
+				
+				RANKX(
+				    ALLSELECTED('FactActivity_Events'[capacity_name]),
+				    [Total activities]
+				)
+				    
+				```
+			formatString: 0
+			displayFolder: 1. Overview\KPI rank bar chart
+			lineageTag: 238a306f-71ad-4dc5-ad8f-088aab0e245f
+
+		measure 'Capacity Rank - Label' = ```
+				"# " & [Capacity Rank]
+				    
+				```
+			displayFolder: 1. Overview\KPI rank bar chart
+			lineageTag: 32a36037-3f5a-4aad-9ab7-5757e2958c32
+
+		measure 'Total refreshes' = ```
+				
+				VAR result = 
+				    CALCULATE(
+				        COUNTROWS('FactActivity_Events'),
+				        'FactActivity_Events'[operation] = "RefreshDataset"
+				    )
+				RETURN
+				    COALESCE(result,0)
+				```
+			formatString: 0
+			displayFolder: Metrics
+			lineageTag: 9517ad32-b884-4e79-baed-e6bc0b8c9c9a
+
+		measure 'Max Refresh' = ```
+				
+				    MAXX(
+				        ALLSELECTED('DimCalendar'[Date]),
+				        [Total refreshes]
+				    )
+				```
+			formatString: 0
+			displayFolder: 1. Overview\Refresh line chart
+			lineageTag: 65d1d28d-625a-4dfd-a300-36fa0a5c2a81
+
+		measure 'Min Refresh' = ```
+				
+				    MINX(
+				        ALLSELECTED('FactActivity_Events'[Date]),
+				        [Total refreshes]
+				    )
+				    
+				```
+			formatString: 0
+			displayFolder: 1. Overview\Refresh line chart
+			lineageTag: 927dd8f6-2a36-4fef-9d7f-bb4a02803af0
+
+		measure 'Refresh Highlight' = ```
+				
+				CALCULATE(
+				    [Max Refresh],
+				    ALLSELECTED('DimCalendar'[Date])
+				)
+				    
+				```
+			formatString: 0
+			displayFolder: 1. Overview\Refresh line chart
+			lineageTag: 6fcda019-9d19-443b-83f5-86d3f9756cc3
+
+		measure 'Max Refresh for Line' = ```
+				[Max Refresh] * 1.2
+				    
+				```
+			formatString: 0
+			displayFolder: 1. Overview\Refresh line chart
+			lineageTag: a56cc941-1f33-40f3-89b7-e6fb5308dec2
+
+		measure 'Refresh Highlight CF' = ```
+				
+				VAR maxref = [Max Refresh]
+				RETURN
+				IF(
+				    [Total refreshes] = maxref, 
+				    "#77ae73",
+				    // [Min Refresh], "#FCEDD8",
+				    "#DFF0E2"
+				)
+				    
+				```
+			displayFolder: 1. Overview\Refresh line chart
+			lineageTag: 0558a8c8-2b99-4977-9eda-42878d5d774b
+
+		measure 'Refresh Highlight Label' = ```
+				
+				SWITCH(
+				    [Total refreshes],
+				    [Max Refresh], [Max Refresh]
+				    // ,[Min Refresh], [Min Refresh]
+				
+				)
+				    
+				```
+			formatString: 0
+			displayFolder: 1. Overview\Refresh line chart
+			lineageTag: df5ae496-48ec-4691-afb2-bf794ec72e4e
+
+		measure 'Total views' = ```
+				
+				VAR result = 
+				    CALCULATE(
+				        COUNTROWS('FactActivity_Events'),
+				        'FactActivity_Events'[operation] = "ViewReport"
+				    )
+				RETURN
+				    COALESCE(result,0)
+				```
+			formatString: 0
+			displayFolder: Metrics
+			lineageTag: 0e841c6a-a994-40f0-8ad0-6b9fdc1abf20
+
+		measure 'Total exports' = ```
+				
+				VAR result = 
+				    CALCULATE(
+				        COUNTROWS('FactActivity_Events'),
+				        'FactActivity_Events'[operation] = "ExportReport"
+				    )
+				RETURN
+				    COALESCE(result,0)
+				```
+			formatString: 0
+			displayFolder: Metrics
+			lineageTag: 4565e474-9c78-40a5-a561-32714867d6b7
+
+		measure 'Item Status' = ```
+				
+				    IF(
+				        SELECTEDVALUE('FactActivity_Events'[First Recorded]) 
+				        >= TODAY() - 'Manual - Active threshold'[LastNdays],
+				        "New"
+				    )
+				```
+			displayFolder: 3. Workspaces
+			lineageTag: 681416e5-eeec-43bf-b4c0-4913bddf613a
+
+		measure 'Total views Dummy' = ```
+				[Total views]
+				    
+				```
+			formatString: 0
+			displayFolder: 3. Workspaces\Dummy
+			lineageTag: 607ed46d-085a-4f10-8a74-df5248208fcf
+
+		measure 'Total exports Dummy' = ```
+				[Total exports]
+				    
+				```
+			formatString: 0
+			displayFolder: 3. Workspaces\Dummy
+			lineageTag: f4854858-b754-4dca-b1ca-5853c1661790
+
+		measure 'Total users' = ```
+				
+				    COALESCE(
+				        DISTINCTCOUNT('FactActivity_Events'[user_id]),
+				        0)
+				```
+			formatString: 0
+			displayFolder: Metrics
+			lineageTag: 41136fbe-3c5b-4fba-8cc3-e489cc5c71e3
+
+		measure 'Total activities Dummy' = ```
+				[Total activities]
+				    
+				```
+			formatString: 0
+			displayFolder: 3. Workspaces\Dummy
+			lineageTag: c8bf777d-dc45-4199-9b94-18413f037008
+
+		measure 'Total refreshes Dummy' = ```
+				[Total refreshes]
+				    
+				```
+			formatString: 0
+			displayFolder: 3. Workspaces\Dummy
+			lineageTag: 0473a8d0-e7c5-45dd-9777-28a28e331769
+
+		measure 'Last Active - Label CF' = ```
+				
+				VAR days =
+				    [Last Active]
+				RETURN
+				    IF(
+				        days <= [LastNdays] / 2,
+				        "#a5c9a2",
+				        "#f9c495"
+				    )    
+				```
+			displayFolder: 3. Workspaces\CF
+			lineageTag: be2a1487-e6ef-4984-a137-6c30c00a5fbc
+
+		measure 'View chart - Label' = ```
+				
+				VAR view_rank =
+				    RANKX(
+				        ALLSELECTED('FactActivity_Events'[workspace_name]),
+				        [Total views]
+				    )
+				VAR total_view =
+				    IF(
+				        [Total views] <= 1,
+				        [Total views] & " view",
+				        [Total views] & " views"
+				    )
+				RETURN
+				    "# " & view_rank 
+				    & " | " 
+				    & total_view
+				    & " | Last view " 
+				    & [Last View - Label]
+				    
+				```
+			displayFolder: 1. Overview\View chart
+			lineageTag: 77d23ed7-e06e-4aa8-abe8-1bad017228d0
+
+		measure 'Last View - Label' = ```
+				
+				VAR lastview =
+				    CALCULATE(
+				        MAX('FactActivity_Events'[creation_time]),
+				        'FactActivity_Events'[operation] = "ViewReport"
+				    )
+				VAR days =
+				    DATEDIFF(lastview, TODAY(), DAY)
+				RETURN
+				SWITCH(TRUE(),
+				    days = 0, "Today",
+				    days = 1, days & " day ago",
+				    days & " days ago"
+				)
+				    
+				```
+			displayFolder: 3. Workspaces\CF
+			lineageTag: 4bd2ff6d-c1aa-43fa-8ac6-38eb9cb0d721
+
+		measure 'ADO Deployment - Total' =
+				
+				VAR result =
+				    CALCULATE(
+				        COUNTROWS(FactActivity_Events),
+				        'FactActivity_Events'[operation] = "Import",
+				        'FactActivity_Events'[User UPN] = "pbi_deployments"
+				    )
+				RETURN
+				    result
+			formatString: 0
+			displayFolder: 1. Overview\ADO deployment line chart
+			lineageTag: 7ac4560a-8323-4bf8-9b96-241a52519d73
+
+		measure 'Middle Line' = ```
+				
+				    IF(
+				        MAX('FactActivity_Events'[operation]) = "BindToGateway",
+				        5
+				    )    
+				```
+			formatString: 0
+			displayFolder: Dummy
+			lineageTag: 7b913a8b-f5ac-4d43-9436-142a1623c1ff
+
+		measure 'ADO Deployment - Baseline' = ```
+				
+				VAR ado =
+				    FILTER(
+				            ALL('FactActivity_Events'),
+				            'FactActivity_Events'[operation] = "Import"
+				            && 'FactActivity_Events'[User UPN] = "pbi_deployments"
+				        )
+				VAR deploy_rank =
+				    RANKX(
+				        ado,
+				        CALCULATE( MIN( 'DimCalendar'[Date] ) ),, 
+				        ASC, Dense
+				    )
+				RETURN
+				    IF(
+				        NOT ISBLANK([ADO Deployment - Total]),
+				        deploy_rank
+				    )
+				```
+			formatString: 0
+			displayFolder: 1. Overview\ADO deployment line chart
+			lineageTag: ce0c7530-fe2c-4c53-90fe-f32126801d4b
+
+		measure 'ADO Deployment - Baseline negative' = ```
+				
+				    [ADO Label Min] - 1
+				```
+			formatString: 0
+			displayFolder: 1. Overview\ADO deployment line chart
+			lineageTag: 003f3c79-87f8-4452-81fe-0337ca84d15c
+
+		measure 'ADO Deployment - Format date' = ```
+				
+				FORMAT(
+				        SELECTEDVALUE('FactActivity_Events'[Date]),
+				        "MMM dd"
+				    )
+				    
+				```
+			displayFolder: 1. Overview\ADO deployment line chart
+			lineageTag: c28825f5-42f9-4b73-a0f2-53e801196874
+
+		measure 'ADO Max' = ```
+				
+				    MAXX(
+				        ALLSELECTED('FactActivity_Events'[Date]),
+				        [ADO Deployment - Total]
+				    ) * 1.6
+				    
+				```
+			formatString: 0
+			displayFolder: 1. Overview\ADO deployment line chart
+			lineageTag: 19b2aed9-45d4-4e96-8cf8-e654babdbd26
+
+		measure 'ADO Label Min' = ```
+				
+				VAR cal = 
+				    MAXX(
+				        ALLSELECTED('DimCalendar'[Date]),
+				        [ADO Deployment - Baseline]
+				    )
+				RETURN
+				    - cal / 2
+				    
+				```
+			formatString: 0
+			displayFolder: 1. Overview\ADO deployment line chart
+			lineageTag: 07d9f1ac-6aa3-4a6e-8dc8-afa18607fa95
+
+		measure 'ADO Label Max' = ```
+				
+				MAXX(
+				        ALLSELECTED('DimCalendar'[Date]),
+				        [ADO Deployment - Baseline]
+				    ) * 1.1
+				    
+				```
+			formatString: 0.0
+			displayFolder: 1. Overview\ADO deployment line chart
+			lineageTag: 93d12dff-adc3-4aa4-a3e9-97add21026f9
+
+		measure 'Last Active' =
+				
+				VAR lastactive =
+				    MAX('FactActivity_Events'[creation_time])
+				RETURN
+				    DATEDIFF(lastactive, TODAY(), DAY)
+			displayFolder: 3. Workspaces
+			lineageTag: 5269dfaf-bee5-440b-a3ee-27600249943f
+
+			formatStringDefinition = ```
+					SWITCH(TRUE(),
+					    [Last Active] = 0, """Today""",
+					    [Last Active] = 1, "0 ""day ago""",
+					    "0 ""days ago"""
+					)
+					
+					```
+
+		measure 'Average Refresh Dur' = ```
+				CALCULATE(
+				    AVERAGE('DimRefreshables'[average_duration])
+				) / 60
+				    
+				```
+			formatString: 0.0
+			displayFolder: 4. Refreshables
+			lineageTag: d076e3af-577b-4cb7-9d2d-75a41f745874
+
+		measure 'Median Refresh Dur' = ```
+				
+				CALCULATE(
+				    MEDIAN('DimRefreshables'[median_duration])
+				) / 60
+				    
+				```
+			formatString: 0.0
+			displayFolder: 4. Refreshables
+			lineageTag: 90cd99c2-0034-45fc-bd14-85f9586fd7ec
+
+		measure 'Average Refresh Dur Rank' = ```
+				RANKX(
+				    ALLSELECTED('FactActivity_Events'[workspace_name]),
+				    [Average Refresh Dur],
+				    , ASC
+				)
+				    
+				```
+			formatString: 0
+			displayFolder: 4. Refreshables
+			lineageTag: cc72596d-8b57-490f-b786-245be50de887
+
+		measure 'Refresh Failures count' = ```
+				
+				CALCULATE(
+				    MAX('DimRefreshables'[refresh_failures])
+				)
+				    
+				```
+			formatString: 0
+			displayFolder: 4. Refreshables
+			lineageTag: 55ed1fa2-edd2-4314-abbe-849f8225ca42
+
+		measure 'Average Refresh Dur Rank - Baseline' =
+				
+				VAR result =
+				    MAXX(
+				        ALLSELECTED('FactActivity_Events'),
+				        [Average Refresh Dur]
+				    )
+				RETURN
+				    result / 6
+			formatString: 0.0
+			displayFolder: 4. Refreshables
+			lineageTag: a8fcd34b-851d-4114-af26-b9cddd91dacb
+
+		measure 'Average Refresh Dur - Label' = ```
+				"# " & [Average Refresh Dur Rank]
+				    
+				```
+			displayFolder: 4. Refreshables
+			lineageTag: 2125368e-feb7-4999-a30d-b36fc40af34c
+
+		measure 'Is Drillable' =
+				
+				VAR totalExport = [Drill - Export]
+				VAR totalView = [Drill - View]
+				VAR totalRefresh = [Drill - Refresh]
+				VAR totalDeploy = [Drill - Deployment]
+				
+				RETURN
+				IF(
+				    SELECTEDVALUE('Manual - Labels'[Value]) = totalExport
+				    || SELECTEDVALUE('Manual - Labels'[Value]) = totalView
+				    || SELECTEDVALUE('Manual - Labels'[Value]) = totalRefresh
+				    || SELECTEDVALUE('Manual - Labels'[Value]) = totalDeploy,
+				    1,
+				    0
+				)
+			formatString: 0
+			displayFolder: Measures Mapping
+			lineageTag: 88778af7-1f90-4da1-8adb-642ad1fc9003
+
+		measure 'Drill - Export' = ```
+				// Drill through Total export
+				VAR metric = MAX('FactActivity_Events'[operation])
+				
+				RETURN 
+				SWITCH(
+				    TRUE,
+				    metric = "ExportReport",
+				    "Exports"
+				)
+				```
+			displayFolder: Measures Mapping
+			lineageTag: 1d59cf7c-4953-4a20-9299-fbae489c2753
+
+		measure 'Drill - View' = ```
+				// Drill through Total view
+				VAR metric = MAX('FactActivity_Events'[operation])
+				
+				RETURN 
+				SWITCH(
+				    TRUE,
+				    metric = "ViewReport",
+				    "Views"
+				)
+				```
+			displayFolder: Measures Mapping
+			lineageTag: 846926b6-37f5-448b-89bf-d52f99dd1d4a
+
+		measure 'Drill - Refresh' = ```
+				// Drill through Total refresh
+				VAR metric = MAX('FactActivity_Events'[operation])
+				
+				RETURN 
+				SWITCH(
+				    TRUE, 
+				    metric = "RefreshDataset",
+				    "Refreshes"
+				)
+				```
+			displayFolder: Measures Mapping
+			lineageTag: 48ad0da7-b5dd-448d-b679-f2c316b2583d
+
+		measure 'Labels Mapping' = ```
+				// To map metrics labels with respective groups/axis
+				    SWITCH( 
+				        SELECTEDVALUE('Manual - Labels'[Value]),
+				        
+				        "Views", [Total views],
+				        "Refreshes", [Total refreshes],
+				        "Exports", [Total exports],
+				        "Import", [ADO Deployment - Total]
+				    )
+				```
+			formatString: 0
+			displayFolder: Measures Mapping
+			lineageTag: b225577c-58f2-47cb-bdad-7bdc48a06946
+
+		measure 'Drill - Deployment' = ```
+				// Drill through Total deploy
+				VAR metric = MAX('FactActivity_Events'[operation])
+				VAR service = MAX(FactActivity_Events[User UPN])
+				
+				RETURN 
+				    SWITCH(
+				        TRUE,
+				        metric = "Import" && service = "pbi_deployments",
+				        "Import"
+				    )
+				```
+			displayFolder: Measures Mapping
+			lineageTag: f75b5e91-18dd-407a-8c19-9998a937ee9a
+
+		measure 'Activities - CF' = ```
+				
+				VAR sel = SELECTEDVALUE('Manual - Labels'[Value])
+				VAR result =
+				    SWITCH(
+				        sel,
+				        "Views", "#6ABAF9",
+				        "Refreshes", "#F7B071",
+				        "Exports", "#F183B2"
+				    )
+				RETURN
+				result
+				    
+				```
+			displayFolder: 2. Analysis
+			lineageTag: 6475016c-2445-4c93-b5d4-682424d66aac
+
+		measure 'Total Users - Negative Label' =
+				
+				VAR mostuser = MAXX(
+				    ALL('DimCalendar'[Date]),
+				    [Total users]
+				)
+				RETURN
+				    - (mostuser/2)
+			formatString: 0
+			displayFolder: 2. Analysis
+			lineageTag: 494c43e2-6ac3-427b-b53b-c9572ce02f0d
+
+		measure 'ADO Deployment - Label' =
+				
+				"Deployed: " & [ADO Deployment - Total] & " item(s)"
+			displayFolder: 1. Overview\ADO deployment line chart
+			lineageTag: 793a91b5-a369-47ce-acce-a624dec4cd39
+
+		partition Measure = m
+			mode: import
+			source =
+					let
+					    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+					    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}}),
+					    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Column1"})
+					in
+					    #"Removed Columns"
+
+		annotation PBI_ResultType = Table
+
+		annotation PBI_NavigationStepName = Navigation
+

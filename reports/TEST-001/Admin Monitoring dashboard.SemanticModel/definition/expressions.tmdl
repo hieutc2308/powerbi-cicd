@@ -1,0 +1,26 @@
+expression activity_event_synthetic =
+		let
+		  Source = Csv.Document(File.Contents("C:\Users\tran.chi.hieu\Downloads\Anonymize data\anonymized_output\activity_event_anonymized_plus_synthetic.csv"), [Delimiter = ",", Columns = 32, QuoteStyle = QuoteStyle.None]),
+		  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+		  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"artifact_id", type text}, {"capacity_id", type text}, {"dataset_id", type text}, {"gateway_id", type text}, {"id", type text}, {"item_id", type text}, {"organization_id", type text}, {"report_id", type text}, {"request_id", type text}, {"user_id", type text}, {"workspace_id", type text}, {"artifact_name", type text}, {"capacity_name", type text}, {"dataset_name", type text}, {"item_name", type text}, {"object_display_name", type text}, {"report_name", type text}, {"workspace_name", type text}, {"consumption_method", type text}, {"data_connectivity_mode", type text}, {"distribution_method", type text}, {"import_source", type text}, {"creation_time", type datetime}, {"Date", type datetime}, {"artifact_kind", type text}, {"import_type", type text}, {"is_success", type logical}, {"object_type", type text}, {"operation", type text}, {"refresh_type", type text}, {"result_status", type text}, {"user_type", Int64.Type}})
+		in
+		  #"Changed column type"
+	lineageTag: 448efb75-5bff-4837-9de2-3a8da6fff5e0
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression data_refreshes_synthetic =
+		let
+		  Source = Csv.Document(File.Contents("C:\Users\tran.chi.hieu\Downloads\Anonymize data\anonymized_output\data_refreshes_anonymized.csv"), [Delimiter = ",", Columns = 13, QuoteStyle = QuoteStyle.None]),
+		  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted headers",{{"Calculation period", type text}, {"configured_by", type text}, {"id", type text}, {"kind", type text}, {"name", type text}, {"average_duration", type number}, {"median_duration", type number}, {"refresh_count", Int64.Type}, {"refresh_failures", Int64.Type}, {"refreshes_per_day", Int64.Type}, {"end_time", type datetime}, {"start_time", type datetime}, {"updated_time", type datetime}})
+		in
+		    #"Changed Type"
+	lineageTag: cc3de60d-9fe1-4209-91bb-3cc53e7cdab4
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

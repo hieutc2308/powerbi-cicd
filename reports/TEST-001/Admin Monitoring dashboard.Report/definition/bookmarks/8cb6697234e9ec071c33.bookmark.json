@@ -1,0 +1,645 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/1.4.0/schema.json",
+  "displayName": "MA - Workspaces",
+  "name": "8cb6697234e9ec071c33",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "55481bd6a599cc1d8aba",
+      "40f2a273076da8240268",
+      "35dafa65ebcb0301659e",
+      "57ddc7397910950e7616",
+      "efd5239c91d020dbbe60",
+      "d465a1f4643a96d5ddac",
+      "2c14362f749230919d30",
+      "1df63dd9d8038a4ea06e",
+      "62326103db6249058c60",
+      "61fc5c60e284ac7b6085",
+      "86b25d4012709c9b12de",
+      "200878b1944042bc3b5e",
+      "8bbc29d03659b2661b8b",
+      "5beea78c3989074090a2"
+    ],
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.3",
+    "activeSection": "878356912980373bce3a",
+    "sections": {
+      "878356912980373bce3a": {
+        "visualContainers": {
+          "380d8c0713198007338d": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          },
+          "2d97d642cc6cd8d1858a": {
+            "singleVisual": {
+              "visualType": "pageNavigator",
+              "objects": {}
+            }
+          },
+          "ba491e4c0932906ae26a": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "objects": {}
+            }
+          },
+          "09c25e160230bd4512d6": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "a24f58ef5c9e89cbce21",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Measure"
+                        }
+                      },
+                      "Property": "Active Workspaces"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Measure"
+                        }
+                      },
+                      "Property": "Active Workspaces"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "67614efda3165b97951a": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "830b3945f3e6a3eb36ba",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Measure"
+                        }
+                      },
+                      "Property": "Active Users"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Measure"
+                        }
+                      },
+                      "Property": "Active Users"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "09e0cd321bbab6469daa": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "4844f3e84f0c598485a6",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Measure"
+                        }
+                      },
+                      "Property": "Active Dashboards / Reports"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Measure"
+                        }
+                      },
+                      "Property": "Active Dashboards / Reports"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "6fc9fe478db35a358555": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "243e9b40e0059f0dee71",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Measure"
+                        }
+                      },
+                      "Property": "Active Capacities"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Measure"
+                        }
+                      },
+                      "Property": "Active Capacities"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "016b117480033254b60c": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          },
+          "990e28d8016cab0265de": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          },
+          "881d1fd1513bd8104e08": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          },
+          "fcf620bfa0386b6ba210": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          },
+          "35dafa65ebcb0301659e": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "a6a8688da5b8e37fd5ba",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Measure"
+                        }
+                      },
+                      "Property": "Total activities"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "e9dbdea8360f1e3a96dd",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Activity Events"
+                        }
+                      },
+                      "Property": "WorkSpaceName"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "8592c7e8d0b78493326a",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Measure"
+                        }
+                      },
+                      "Property": "Workspace Rank - Baseline"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "barChart",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Measure"
+                        }
+                      },
+                      "Property": "Total activities"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Category": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Activity Events"
+                        }
+                      },
+                      "Property": "WorkSpaceName"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "57ddc7397910950e7616": {
+            "singleVisual": {
+              "visualType": "shape",
+              "objects": {}
+            }
+          },
+          "d465a1f4643a96d5ddac": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "73f4c03ec933c1a0bc05",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Measure"
+                        }
+                      },
+                      "Property": "Total activities"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "fbe2b9422e2ffb07871f",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Activity Events"
+                        }
+                      },
+                      "Property": "WorkSpaceName"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "5d4b178a53aa70a6a9ce",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Measure"
+                        }
+                      },
+                      "Property": "Workspace Rank - Baseline"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "barChart",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Measure"
+                        }
+                      },
+                      "Property": "Total activities"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Category": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Activity Events"
+                        }
+                      },
+                      "Property": "WorkSpaceName"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "2c14362f749230919d30": {
+            "singleVisual": {
+              "visualType": "shape",
+              "objects": {}
+            }
+          },
+          "62326103db6249058c60": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "d3943ad418169952bafe",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Measure"
+                        }
+                      },
+                      "Property": "Total activities"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "a95c2a15ea689c4b8cc7",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Activity Events"
+                        }
+                      },
+                      "Property": "WorkSpaceName"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "023fc3f66324858e3928",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Measure"
+                        }
+                      },
+                      "Property": "Workspace Rank - Baseline"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "barChart",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Measure"
+                        }
+                      },
+                      "Property": "Total activities"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Category": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Activity Events"
+                        }
+                      },
+                      "Property": "WorkSpaceName"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "61fc5c60e284ac7b6085": {
+            "singleVisual": {
+              "visualType": "shape",
+              "objects": {}
+            }
+          },
+          "200878b1944042bc3b5e": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "e101e3e2e72d2141bddc",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Measure"
+                        }
+                      },
+                      "Property": "Total activities"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "b370343a291c5611c239",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Activity Events"
+                        }
+                      },
+                      "Property": "WorkSpaceName"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "8b1698118dda808aebba",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Measure"
+                        }
+                      },
+                      "Property": "Workspace Rank - Baseline"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "barChart",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Measure"
+                        }
+                      },
+                      "Property": "Total activities"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Category": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Activity Events"
+                        }
+                      },
+                      "Property": "WorkSpaceName"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "8bbc29d03659b2661b8b": {
+            "singleVisual": {
+              "visualType": "shape",
+              "objects": {}
+            }
+          },
+          "5beea78c3989074090a2": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          }
+        },
+        "visualContainerGroups": {
+          "00566ada2d7e29300771": {
+            "isHidden": false
+          },
+          "d577fce48ed40c1c8a53": {
+            "isHidden": true
+          },
+          "55481bd6a599cc1d8aba": {
+            "isHidden": false,
+            "children": {
+              "40f2a273076da8240268": {
+                "isHidden": true
+              },
+              "efd5239c91d020dbbe60": {
+                "isHidden": false
+              },
+              "1df63dd9d8038a4ea06e": {
+                "isHidden": true
+              },
+              "86b25d4012709c9b12de": {
+                "isHidden": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "objects": {
+      "merge": {
+        "outspacePane": [
+          {
+            "properties": {
+              "expanded": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+relationship b92870f4-712a-8c69-0a8a-caa9949c0d87
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: FactActivity_Events.dataset_id
+	toColumn: DimRefreshables.id
+
+relationship 0e69ac9d-3aaf-579f-5ff2-a8656c2c0c6a
+	fromColumn: FactActivity_Events.Date
+	toColumn: DimCalendar.Date
+
+relationship d4612f2d-7902-9312-310c-49632672fa4f
+	fromColumn: FactActivity_Events.user_id
+	toColumn: 'Manual - Service Principal'.UserId
+

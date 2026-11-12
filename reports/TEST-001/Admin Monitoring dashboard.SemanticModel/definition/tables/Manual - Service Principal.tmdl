@@ -1,0 +1,34 @@
+table 'Manual - Service Principal'
+	lineageTag: 42879e81-a0ae-41bc-a889-6974046b2e1c
+
+	column UserId
+		lineageTag: aa2fe151-9a0f-4cb7-9e9a-301601522577
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [UserId]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Service Principal Name'
+		lineageTag: 0f47d654-a10b-4c3a-9fb5-edcefe45a1e9
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Service Principal Name]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Manual - Service Principal' = calculated
+		mode: import
+		source =
+				
+				DATATABLE(
+				    "UserId", STRING,
+				    "Service Principal Name", STRING,
+				    {
+				        {"person_000007@example.invalid","pbi_deployments"},
+				        {"user_id_000001", "pbi_embedded_auth"}
+				    }
+				)
+
+	annotation PBI_Id = 29c7f915fe4242169d27b5e2aaa94165
+

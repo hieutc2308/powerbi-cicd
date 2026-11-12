@@ -1,0 +1,16 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "91083316e170c896106e",
+  "position": {
+    "x": 60,
+    "y": 230,
+    "z": 8000,
+    "height": 115,
+    "width": 1480,
+    "tabOrder": 1000
+  },
+  "visualGroup": {
+    "displayName": "Overview Card",
+    "groupMode": "ScaleMode"
+  }
+}

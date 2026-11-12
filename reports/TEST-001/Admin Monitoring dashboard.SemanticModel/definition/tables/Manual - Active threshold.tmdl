@@ -1,0 +1,30 @@
+table 'Manual - Active threshold'
+	lineageTag: 722943fb-0d17-42e9-b8fd-1c305b55d731
+
+	measure LastNdays = ```
+			SELECTEDVALUE('Manual - Active threshold'[Active Threshold], 15)
+			
+			
+			```
+		formatString: 0
+		lineageTag: 725bdb0d-2577-4030-b3d7-8e1800ba5c2f
+
+	column 'Active Threshold'
+		formatString: 0
+		lineageTag: e9dfb46e-2a71-46c4-8224-3cf5b6aa3ff5
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition 'Manual - Active threshold' = calculated
+		mode: import
+		source = GENERATESERIES(0, 30, 1)
+
+	annotation PBI_Id = 992a818d11a645ffb9028bed9fdb6f6b
+

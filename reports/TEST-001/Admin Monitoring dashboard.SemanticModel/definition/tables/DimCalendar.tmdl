@@ -1,0 +1,85 @@
+table DimCalendar
+	lineageTag: 30d07291-281e-4cd4-ad97-def9300e2835
+	dataCategory: Time
+
+	column Date
+		isKey
+		formatString: mm/dd/yyyy
+		lineageTag: fa62c199-4f38-4567-90d3-c7c8737ad4d7
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column Year
+		isHidden
+		formatString: 0
+		lineageTag: 912729ff-8057-4d05-b04a-7ad30a3cdd39
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Year]
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthNo
+		isHidden
+		formatString: 0
+		lineageTag: 24e05c33-7f8f-4d56-9034-5249a3472309
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [MonthNo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		isHidden
+		lineageTag: 2c3001da-6616-4ba4-b8a6-9245406a1860
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month]
+		sortByColumn: MonthNo
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateNum
+		isHidden
+		formatString: 0
+		lineageTag: 273e08ed-0c0f-483b-b7dc-bd743c51dabe
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [DateNum]
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy 'Year Hierarchy'
+		lineageTag: 2ea0dd31-14b7-455e-a66f-eb964570f9fe
+
+		level Year
+			lineageTag: 92a0d079-fae5-4036-ad51-7942f8f97788
+			column: Year
+
+		level Month
+			lineageTag: 9aa27dab-06b2-43d8-a0f4-36dded5adc36
+			column: Month
+
+		level DateNum
+			lineageTag: b6097023-1236-467d-a26d-8b1e65b147d7
+			column: DateNum
+
+	partition DimCalendar = calculated
+		mode: import
+		source =
+				
+				ADDCOLUMNS(
+				    CALENDAR(MIN(FactActivity_Events[Date]), MAX(FactActivity_Events[Date])),
+				    "Year", YEAR([Date]),
+				    "MonthNo", MONTH([Date]),
+				    "Month", FORMAT([Date], "MMM"),
+				    "DateNum", DAY( [Date] )
+				)
+
+	annotation PBI_Id = 8944f7bcc5e54c03ab34ff1ca9eaf955
+

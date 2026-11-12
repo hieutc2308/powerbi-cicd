@@ -1,0 +1,132 @@
+table DimRefreshables
+	lineageTag: 13a2171e-00de-48c2-a0c6-5e0e69329bd2
+
+	column id
+		dataType: string
+		lineageTag: a9a71387-5b3e-40f8-aee1-0acc0d6138d1
+		summarizeBy: none
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column name
+		dataType: string
+		lineageTag: 265a0d2b-e930-4fa9-9389-95e4d3b9966c
+		summarizeBy: none
+		sourceColumn: name
+
+		annotation SummarizationSetBy = Automatic
+
+	column kind
+		dataType: string
+		lineageTag: 9c6d2ab1-de35-41b5-ac3d-d92218e9a03b
+		summarizeBy: none
+		sourceColumn: kind
+
+		annotation SummarizationSetBy = Automatic
+
+	column configured_by
+		dataType: string
+		lineageTag: 094f2a5e-5b35-412b-8f3b-ff2f2c289093
+		summarizeBy: none
+		sourceColumn: configured_by
+
+		annotation SummarizationSetBy = Automatic
+
+	column start_time
+		dataType: dateTime
+		formatString: General Date
+		displayFolder: Time
+		lineageTag: 9adf4a1c-9ddc-4fc2-b3ad-e776e3e979a2
+		summarizeBy: none
+		sourceColumn: start_time
+
+		annotation SummarizationSetBy = Automatic
+
+	column end_time
+		dataType: dateTime
+		formatString: General Date
+		displayFolder: Time
+		lineageTag: edf4ccfe-1802-4dc5-96ce-a7492ca9daa5
+		summarizeBy: none
+		sourceColumn: end_time
+
+		annotation SummarizationSetBy = Automatic
+
+	column updated_time
+		dataType: dateTime
+		formatString: General Date
+		displayFolder: Time
+		lineageTag: 6312d852-7729-4e1d-8a22-59a2ea47628a
+		summarizeBy: none
+		sourceColumn: updated_time
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Calculation period'
+		dataType: string
+		lineageTag: 4b091242-b81c-472c-8d69-b06fcf309e21
+		summarizeBy: none
+		sourceColumn: Calculation period
+
+		annotation SummarizationSetBy = Automatic
+
+	column average_duration
+		dataType: double
+		lineageTag: cb36b3bb-b6a8-4dcf-ad3d-7f5d3dbc979d
+		summarizeBy: sum
+		sourceColumn: average_duration
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column median_duration
+		dataType: double
+		lineageTag: f412710d-f319-4b74-871c-1edc89d22888
+		summarizeBy: sum
+		sourceColumn: median_duration
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column refresh_count
+		dataType: int64
+		formatString: 0
+		lineageTag: cd702e3d-663e-42a1-a981-9ccf4b3a8ff0
+		summarizeBy: sum
+		sourceColumn: refresh_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column refresh_failures
+		dataType: int64
+		formatString: 0
+		lineageTag: 84d5e3de-a713-48a1-b883-6b9d53d54d8f
+		summarizeBy: sum
+		sourceColumn: refresh_failures
+
+		annotation SummarizationSetBy = Automatic
+
+	column refreshes_per_day
+		dataType: int64
+		formatString: 0
+		lineageTag: 924f6d4d-63a1-4ccc-93ed-e67ff72763e9
+		summarizeBy: sum
+		sourceColumn: refreshes_per_day
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimRefreshables = m
+		mode: import
+		source =
+				let
+				    Source = data_refreshes_synthetic
+				in
+				    Source
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

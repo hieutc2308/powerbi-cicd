@@ -1,0 +1,18 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
+  "name": "efd5239c91d020dbbe60",
+  "position": {
+    "x": 434.75369458128057,
+    "y": 344.99999999999989,
+    "z": 3000,
+    "height": 345,
+    "width": 355,
+    "tabOrder": 9000
+  },
+  "visualGroup": {
+    "displayName": "Active Workspace",
+    "groupMode": "ScaleMode"
+  },
+  "parentGroupName": "55481bd6a599cc1d8aba",
+  "isHidden": true
+}

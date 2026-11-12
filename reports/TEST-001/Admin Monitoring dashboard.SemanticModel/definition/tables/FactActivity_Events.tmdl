@@ -1,0 +1,348 @@
+table FactActivity_Events
+	lineageTag: 3cf1ba32-c35f-4d4b-a66d-ccd7931fcf46
+
+	column id
+		dataType: string
+		displayFolder: ID fields
+		lineageTag: 14b51af8-271b-4c62-80ab-d297148abd54
+		summarizeBy: none
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column organization_id
+		dataType: string
+		displayFolder: ID fields
+		lineageTag: 333db6ae-79a8-492d-bff6-dacc0d8a18fa
+		summarizeBy: none
+		sourceColumn: organization_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column user_type
+		dataType: int64
+		formatString: 0
+		displayFolder: Type/Kinds
+		lineageTag: fc372b87-8642-4273-832d-36c3a0620b32
+		summarizeBy: sum
+		sourceColumn: user_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column user_id
+		dataType: string
+		displayFolder: ID fields
+		lineageTag: ae740d47-ec5a-4eea-86f6-84b4670f49d9
+		summarizeBy: none
+		sourceColumn: user_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column request_id
+		dataType: string
+		displayFolder: ID fields
+		lineageTag: e61dd271-d439-4dba-b65c-f33cd659dca0
+		summarizeBy: none
+		sourceColumn: request_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column creation_time
+		dataType: dateTime
+		formatString: General Date
+		displayFolder: Time
+		lineageTag: fe0554c9-0943-42e3-8f79-88d36421caeb
+		summarizeBy: none
+		sourceColumn: creation_time
+
+		annotation SummarizationSetBy = Automatic
+
+	column operation
+		dataType: string
+		displayFolder: Type/Kinds
+		lineageTag: 88a81c6a-8726-447b-96b9-294477030dee
+		summarizeBy: none
+		sourceColumn: operation
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_success
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		displayFolder: Type/Kinds
+		lineageTag: d7c4447c-c2f9-416d-ae7e-d464618642f8
+		summarizeBy: none
+		sourceColumn: is_success
+
+		annotation SummarizationSetBy = Automatic
+
+	column item_id
+		dataType: string
+		displayFolder: ID fields
+		lineageTag: 04d1ea35-0794-4523-a0e4-0eda555b5483
+		summarizeBy: none
+		sourceColumn: item_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column item_name
+		dataType: string
+		displayFolder: Name fields
+		lineageTag: d8bb21a0-ddb1-4714-84f1-e7a5f0dd562c
+		summarizeBy: none
+		sourceColumn: item_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column distribution_method
+		dataType: string
+		displayFolder: Others
+		lineageTag: d5207fa6-65f3-4261-a429-b5212dafafd7
+		summarizeBy: none
+		sourceColumn: distribution_method
+
+		annotation SummarizationSetBy = Automatic
+
+	column consumption_method
+		dataType: string
+		displayFolder: Others
+		lineageTag: 865372f9-75b7-41b4-a7a0-da993d9838d4
+		summarizeBy: none
+		sourceColumn: consumption_method
+
+		annotation SummarizationSetBy = Automatic
+
+	column capacity_name
+		dataType: string
+		displayFolder: Name fields
+		lineageTag: 72602ddc-da26-49d2-a758-fdce215376ff
+		summarizeBy: none
+		sourceColumn: capacity_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column capacity_id
+		dataType: string
+		displayFolder: ID fields
+		lineageTag: fe13d122-35f9-45fa-b9bc-b1f6b0fac68a
+		summarizeBy: none
+		sourceColumn: capacity_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column workspace_name
+		dataType: string
+		displayFolder: Name fields
+		lineageTag: 17884996-bc04-458c-af8a-b63f98d1eb4e
+		summarizeBy: none
+		sourceColumn: workspace_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column workspace_id
+		dataType: string
+		displayFolder: ID fields
+		lineageTag: b8ee0bd0-53a3-49f2-8678-67a0577749e7
+		summarizeBy: none
+		sourceColumn: workspace_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column dataset_name
+		dataType: string
+		displayFolder: Name fields
+		lineageTag: 900c6c61-0e86-414d-8b64-1dd9c3aaba22
+		summarizeBy: none
+		sourceColumn: dataset_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column dataset_id
+		dataType: string
+		displayFolder: ID fields
+		lineageTag: f43fa88d-bbc6-467e-bacc-3a491a30b706
+		summarizeBy: none
+		sourceColumn: dataset_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column report_name
+		dataType: string
+		displayFolder: Name fields
+		lineageTag: f66c80d0-3652-4be6-b791-f97e9784114e
+		summarizeBy: none
+		sourceColumn: report_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column report_id
+		dataType: string
+		displayFolder: ID fields
+		lineageTag: f13ed96f-1b1b-447d-a013-8e6951d6b007
+		summarizeBy: none
+		sourceColumn: report_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column artifact_id
+		dataType: string
+		displayFolder: ID fields
+		lineageTag: 19528c2a-b4d1-4bf7-b677-e4bdbd8d3223
+		summarizeBy: none
+		sourceColumn: artifact_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column artifact_name
+		dataType: string
+		displayFolder: Name fields
+		lineageTag: c570979e-0008-4a6f-b0ec-c1cc2b87054a
+		summarizeBy: none
+		sourceColumn: artifact_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column artifact_kind
+		dataType: string
+		displayFolder: Type/Kinds
+		lineageTag: 1caf432f-7f1b-415f-81d1-304dc3f15381
+		summarizeBy: none
+		sourceColumn: artifact_kind
+
+		annotation SummarizationSetBy = Automatic
+
+	column result_status
+		dataType: string
+		displayFolder: Type/Kinds
+		lineageTag: e7b42087-934b-4b70-88a9-cd628b0111c1
+		summarizeBy: none
+		sourceColumn: result_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column object_type
+		dataType: string
+		displayFolder: Type/Kinds
+		lineageTag: 1cfdc1c6-e687-4b06-b2c7-7ff873331018
+		summarizeBy: none
+		sourceColumn: object_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column object_display_name
+		dataType: string
+		displayFolder: Name fields
+		lineageTag: d5537e89-af67-4422-a768-d140f5e7244a
+		summarizeBy: none
+		sourceColumn: object_display_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column import_source
+		dataType: string
+		displayFolder: Others
+		lineageTag: 98a594b5-c4ff-4fc5-90c9-78866b22b2c9
+		summarizeBy: none
+		sourceColumn: import_source
+
+		annotation SummarizationSetBy = Automatic
+
+	column import_type
+		dataType: string
+		displayFolder: Type/Kinds
+		lineageTag: 99c0e478-90dd-4ec5-ab7d-35667f44a7f1
+		summarizeBy: none
+		sourceColumn: import_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column data_connectivity_mode
+		dataType: string
+		displayFolder: Others
+		lineageTag: 01c38ace-4ae4-4617-9b30-f70b11cb28d4
+		summarizeBy: none
+		sourceColumn: data_connectivity_mode
+
+		annotation SummarizationSetBy = Automatic
+
+	column gateway_id
+		dataType: string
+		displayFolder: ID fields
+		lineageTag: 29c10d56-7643-46ea-8718-ff05e3dfbef7
+		summarizeBy: none
+		sourceColumn: gateway_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column refresh_type
+		dataType: string
+		displayFolder: Type/Kinds
+		lineageTag: 1d3bae3b-3791-4eba-a486-07980ac1b394
+		summarizeBy: none
+		sourceColumn: refresh_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: m/d/yyyy
+		displayFolder: Time
+		lineageTag: 4791be76-1846-4ef0-950d-4e0814aa6604
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column 'First Recorded' =
+			
+			CALCULATE(
+			    FIRSTDATE('FactActivity_Events'[Date]),
+			    FILTER(
+			        'FactActivity_Events',
+			        'FactActivity_Events'[workspace_id] = EARLIER('FactActivity_Events'[workspace_id])
+			        && 'FactActivity_Events'[item_name] = EARLIER('FactActivity_Events'[item_name])
+			    )
+			)
+		formatString: m/d/yyyy
+		displayFolder: Calculated Columns
+		lineageTag: 34c02fbc-5628-4954-99b0-582241885d9c
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column 'User UPN' =
+			
+			VAR sp = RELATED('Manual - Service Principal'[Service Principal Name])
+			VAR result =
+			    IF( ISBLANK(sp),
+			        'FactActivity_Events'[user_id],
+			        sp
+			    )
+			
+			RETURN
+			    result
+		displayFolder: Calculated Columns
+		lineageTag: 9f521822-8da8-4694-81d4-4ae129c93632
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactActivity_Events = m
+		mode: import
+		source =
+				let
+				    Source = activity_event_synthetic,
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"id", type text}, {"organization_id", type text}, {"user_type", Int64.Type}, {"user_id", type text}, {"request_id", type text}, {"creation_time", type datetime}, {"operation", type text}, {"is_success", type logical}, {"item_id", type text}, {"item_name", type text}, {"distribution_method", type text}, {"consumption_method", type text}, {"capacity_name", type text}, {"capacity_id", type text}, {"workspace_name", type text}, {"workspace_id", type text}, {"dataset_name", type text}, {"dataset_id", type text}, {"report_name", type text}, {"report_id", type text}, {"artifact_id", type text}, {"artifact_name", type text}, {"artifact_kind", type text}, {"result_status", type text}, {"object_type", type text}, {"object_display_name", type text}, {"import_source", type text}, {"import_type", type text}, {"data_connectivity_mode", type text}, {"gateway_id", type text}, {"refresh_type", type text}, {"Date", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

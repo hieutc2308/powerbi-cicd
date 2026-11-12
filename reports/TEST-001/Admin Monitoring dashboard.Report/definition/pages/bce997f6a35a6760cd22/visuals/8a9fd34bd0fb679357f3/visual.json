@@ -1,0 +1,16 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
+  "name": "8a9fd34bd0fb679357f3",
+  "position": {
+    "x": 60.183486238532112,
+    "y": 150,
+    "z": 2000,
+    "height": 80,
+    "width": 355.22935779816515,
+    "tabOrder": 7000
+  },
+  "visualGroup": {
+    "displayName": "Active threshold",
+    "groupMode": "ScaleMode"
+  }
+}

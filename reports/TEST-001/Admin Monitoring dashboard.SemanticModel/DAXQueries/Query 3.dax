@@ -1,0 +1,8 @@
+EVALUATE
+	SUMMARIZECOLUMNS(
+		// FactActivity_Events[user_id],
+		FactActivity_Events[operation],
+		"count",
+		COUNTROWS(FactActivity_Events)
+	)
+	ORDER BY [count] DESC

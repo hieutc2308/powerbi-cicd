@@ -1,0 +1,14 @@
+* text=auto
+
+# PBIP TMDL and Tabular Editor BPA rules require Windows CRLF
+*.tmdl text eol=crlf
+config/*.json text eol=crlf
+
+# Scripts, workflows, and documentation
+*.py text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.md text eol=lf
+*.ps1 text eol=crlf
+*.csx text eol=crlf
+

@@ -1,0 +1,19 @@
+# Power BI PBIP local runtime & cache
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+**/.pbi/unappliedChanges.json
+
+# Binary Power BI desktop files
+*.pbix
+
+# CI/CD generated outputs & downloaded tools
+dist/
+artifacts/
+tools/te2/
+
+# Python environments & test caches
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/

@@ -1,0 +1,26 @@
+{
+  "pbip": {
+    "reports_root": "reports"
+  },
+  "bpa": {
+    "rules_file": "config/bpa-rules.json",
+    "fail_severity": 3,
+    "ignored_rule_ids": [],
+    "severity_overrides": {}
+  },
+  "output": {
+    "dist_dir": "dist"
+  },
+  "phase2_hooks": {
+    "fabric": {
+      "enabled": false,
+      "dev_workspace": "",
+      "test_workspace": "",
+      "prod_workspace": ""
+    },
+    "jira": {
+      "enabled": false,
+      "project_key": ""
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "50278542e0654a893b40",
+  "position": {
+    "x": 1430,
+    "y": 165,
+    "z": 6000,
+    "height": 40,
+    "width": 110.16017212526894,
+    "tabOrder": 7000
+  },
+  "visualGroup": {
+    "displayName": "Open/Count Filter",
+    "groupMode": "ScaleMode"
+  }
+}

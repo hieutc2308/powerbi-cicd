@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pbi-cicd"
+version = "0.1.0"
+description = "Local-first CI/CD analyzer, BPA advisory gate, Markdown docs, and interactive lineage portal for Power BI PBIP projects."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "jsonschema>=4.20",
+    "PyYAML>=6.0",
+]
+
+[project.scripts]
+pbi-cicd = "pbi_cicd.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["scripts"]
+include = ["pbi_cicd*"]
+
+[tool.setuptools.package-data]
+pbi_cicd = ["portal/*.html", "portal/*.css", "portal/*.js", "portal/*.txt"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["scripts"]
+

@@ -1,0 +1,29 @@
+name: Set up Tabular Editor 2
+description: Download the pinned portable read-only analyzer on a Windows runner.
+inputs:
+  version:
+    description: Tabular Editor release tag
+    required: false
+    default: "2.28.0"
+outputs:
+  executable:
+    description: Portable executable path
+    value: ${{ steps.download.outputs.executable }}
+runs:
+  using: composite
+  steps:
+    - name: Download portable TE2
+      id: download
+      shell: pwsh
+      env:
+        TE2_RELEASE: ${{ inputs.version }}
+      run: |
+        $directory = Join-Path $env:RUNNER_TEMP "te2-$env:TE2_RELEASE"
+        $executable = Join-Path $directory "TabularEditor.exe"
+        New-Item -ItemType Directory -Path $directory -Force | Out-Null
+        $archive = Join-Path $env:RUNNER_TEMP "te2-portable.zip"
+        $url = "https://github.com/TabularEditor/TabularEditor/releases/download/$env:TE2_RELEASE/TabularEditor.Portable.zip"
+        Invoke-WebRequest -Uri $url -OutFile $archive
+        Expand-Archive -LiteralPath $archive -DestinationPath $directory -Force
+        if (-not (Test-Path -LiteralPath $executable)) { throw "TE2 executable was not extracted" }
+        "executable=$executable" | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8

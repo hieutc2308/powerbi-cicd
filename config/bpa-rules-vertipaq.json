@@ -1,0 +1,53 @@
+[
+  {
+    "ID": "VERTIPAQ_BIDI_HIGH_CARDINALITY",
+    "Name": "[VertiPaq] Avoid bi-directional relationships against high-cardinality columns",
+    "Category": "Performance",
+    "Description": "Requires Vertipaq_Cardinality annotations (populated via dscmd.exe / VertiPaq Analyzer).",
+    "Severity": 2,
+    "Scope": "DataColumn, CalculatedColumn, CalculatedTableColumn",
+    "Expression": "UsedInRelationships.Any(CrossFilteringBehavior == CrossFilteringBehavior.BothDirections) and Convert.ToInt64(GetAnnotation(\"Vertipaq_Cardinality\")) > 100000",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "VERTIPAQ_LONG_LENGTH_HIGH_CARDINALITY",
+    "Name": "[VertiPaq] Reduce long-length columns with high cardinality",
+    "Category": "Performance",
+    "Description": "Requires LongLengthRowCount annotations (> 500,000 rows).",
+    "Severity": 2,
+    "Scope": "DataColumn, CalculatedColumn, CalculatedTableColumn",
+    "Expression": "Convert.ToInt64(GetAnnotation(\"LongLengthRowCount\")) > 500000",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "VERTIPAQ_SPLIT_DATE_AND_TIME",
+    "Name": "[VertiPaq] Split date and time columns with non-midnight timestamps",
+    "Category": "Performance",
+    "Description": "Requires DateTimeWithHourMinSec annotations.",
+    "Severity": 2,
+    "Scope": "DataColumn, CalculatedColumn, CalculatedTableColumn",
+    "Expression": "Convert.ToInt32(GetAnnotation(\"DateTimeWithHourMinSec\")) > 0",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "VERTIPAQ_LARGE_TABLES_PARTITIONED",
+    "Name": "[VertiPaq] Partition large tables (> 25M rows)",
+    "Category": "Performance",
+    "Description": "Requires Vertipaq_RowCount annotations.",
+    "Severity": 2,
+    "Scope": "Table",
+    "Expression": "Convert.ToInt64(GetAnnotation(\"Vertipaq_RowCount\")) > 25000000 and Partitions.Count = 1",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "VERTIPAQ_FIX_REFERENTIAL_INTEGRITY",
+    "Name": "[VertiPaq] Fix referential integrity violations",
+    "Category": "Maintenance",
+    "Description": "Requires Vertipaq_RIViolationInvalidRows annotations.",
+    "Severity": 2,
+    "Scope": "Relationship",
+    "Expression": "Convert.ToInt64(GetAnnotation(\"Vertipaq_RIViolationInvalidRows\")) > 0",
+    "CompatibilityLevel": 1200
+  }
+]
+

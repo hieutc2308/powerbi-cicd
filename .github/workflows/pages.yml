@@ -1,0 +1,75 @@
+name: Deploy PBIP Documentation Portal
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build-portal:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - name: Install analyzer and tests
+        shell: pwsh
+        run: |
+          python -m pip install uv
+          uv venv .venv
+          uv pip install --python .venv\Scripts\python.exe -e ".[dev]"
+      - name: Verify generator before publication
+        shell: pwsh
+        run: .venv\Scripts\python.exe -m pytest tests/ -v
+      - name: Set up TE2
+        id: te2
+        uses: ./.github/actions/setup-te2
+      - name: Build every current ticket from fresh metadata
+        shell: pwsh
+        env:
+          TE2_EXE: ${{ steps.te2.outputs.executable }}
+        run: .\scripts\run-local.ps1 -Te2Exe $env:TE2_EXE
+      - name: Stage only standalone website files
+        shell: pwsh
+        run: .venv\Scripts\python.exe -m pbi_cicd.cli --root . --build-index --site dist/site
+      - name: Upload complete ticket analysis artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: all-ticket-analysis
+          path: |
+            dist/*/index.html
+            dist/*/*.json
+            dist/*/*.md
+          retention-days: 30
+      - name: Upload clean Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/site/
+
+  deploy-portal:
+    needs: build-portal
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Deploy report catalog and ticket portals
+        id: deployment
+        uses: actions/deploy-pages@v4
