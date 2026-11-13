@@ -1,0 +1,57 @@
+table 'Voluntary leaved'
+	lineageTag: b995b718-c432-4df0-911c-c3c740503abb
+
+	column 'Month Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 3c9b8aca-c777-43c8-a249-3b1145fea2fa
+		summarizeBy: none
+		sourceColumn: Month Date
+
+		variation Variation
+			isDefault
+			relationship: ec185b1f-c04f-4754-8824-16476eaac65b
+			defaultHierarchy: LocalDateTable_9ece0dec-d8b8-4e79-991c-d5f68aaa4d27.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Voluntary leaved'
+		dataType: int64
+		formatString: 0
+		lineageTag: 9d16eb85-2853-467a-bdd6-1df452ab00aa
+		summarizeBy: sum
+		sourceColumn: Voluntary leaved
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Voluntary leaved' = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\thao.nguyen-thu2\Downloads\employeedata.xlsx"), null, true),
+				    #"Data turnover+onboarding_Sheet" = Source{[Item="Data turnover+onboarding",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Data turnover+onboarding_Sheet", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Column1", type text}, {"Column2", type any}, {"Column3", type any}, {"Jan", type any}, {"Feb", type any}, {"Mar", type any}, {"Apr", type any}, {"May", type any}, {"Jun", type any}, {"Jul", type any}, {"Aug", type any}, {"Sep", type any}, {"Oct", type any}, {"Nov", type any}, {"Dec", type any}, {"Column16", type any}, {"Column17", type any}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Column2", "Column16", "Column17"}),
+				    #"Kept First Rows" = Table.FirstN(#"Removed Columns",17),
+				    #"Removed Top Rows" = Table.Skip(#"Kept First Rows",2),
+				    #"Filtered Rows" = Table.SelectRows(#"Removed Top Rows", each ([Column3] <> null)),
+				    #"Filled Down" = Table.FillDown(#"Filtered Rows",{"Column1"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Filled Down",{{"Column3", "Year"}}),
+				    #"Unpivoted Other Columns" = Table.UnpivotOtherColumns(#"Renamed Columns", {"Column1", "Year"}, "Attribute", "Value"),
+				    #"Merged Columns" = Table.CombineColumns(Table.TransformColumnTypes(#"Unpivoted Other Columns", {{"Year", type text}}, "en-US"),{"Year", "Attribute"},Combiner.CombineTextByDelimiter("-", QuoteStyle.None),"Merged"),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Merged Columns",{{"Merged", type date}}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Changed Type1",{{"Merged", "Month Date"}, {"Column1", "Number"}}),
+				    #"Filtered Rows1" = Table.SelectRows(#"Renamed Columns1", each ([Number] = "Voluntary leaved")),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Filtered Rows1",{{"Value", "Voluntary leaved"}}),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Renamed Columns2",{"Number"}),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Removed Columns1",{{"Voluntary leaved", Int64.Type}})
+				in
+				    #"Changed Type2"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

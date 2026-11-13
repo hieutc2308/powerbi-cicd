@@ -1,0 +1,35 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["Data cost 5M 22","Data HC Apr 22","Data HC May 22","HC plan by Division","Data to forecast HC","Turnover rate","Staff cost plan by Division","Staff cost plan by Item","Turnover by Career level","Turnover by Tenure","Onboarding","Movement","Voluntary leaved"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table 'Data cost 5M 22'
+ref table 'Data HC Apr 22'
+ref table DateTableTemplate_354c5819-8571-4fb0-acf7-4f3d23d09ad8
+ref table 'Data HC May 22'
+ref table 'HC plan by Division'
+ref table 'Data to forecast HC'
+ref table 'Turnover rate'
+ref table 'Staff cost plan by Division'
+ref table 'Staff cost plan by Item'
+ref table 'Turnover by Career level'
+ref table 'Turnover by Tenure'
+ref table Onboarding
+ref table LocalDateTable_4905c564-1ba2-4d86-89a9-d5542b5e6298
+ref table Date
+ref table Movement
+ref table LocalDateTable_d66cbb89-1d35-4da2-93ce-b0c350adfe83
+ref table 'Voluntary leaved'
+ref table LocalDateTable_9ece0dec-d8b8-4e79-991c-d5f68aaa4d27
+
+ref cultureInfo en-US
+

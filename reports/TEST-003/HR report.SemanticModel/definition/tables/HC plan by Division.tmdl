@@ -1,0 +1,59 @@
+table 'HC plan by Division'
+	lineageTag: 598ff54b-7320-4819-b3de-989e0edef5a6
+
+	measure 'May Difference' = SUM('Data to forecast HC'[Actual May/22]) - SUM('HC plan by Division'[Plan May/22])
+		formatString: 0
+		lineageTag: 6529c89e-66eb-40fc-a91c-fea0e3a4bac0
+
+	measure '2022 Difference' = SUM('Data to forecast HC'[Actual May/22]) - SUM('HC plan by Division'[Plan 2022])
+		formatString: 0
+		lineageTag: 16dea4d1-41a7-4303-ac74-96defb245b1e
+
+	column Division
+		dataType: string
+		lineageTag: 1936a5bf-ceb1-45c5-af99-9cec6eb167d3
+		summarizeBy: none
+		sourceColumn: Division
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Plan May/22'
+		dataType: int64
+		formatString: 0
+		lineageTag: cad33666-a3ec-4c6b-903a-99dccdbfbd07
+		summarizeBy: sum
+		sourceColumn: Plan May/22
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Plan 2022'
+		dataType: int64
+		formatString: 0
+		lineageTag: 30c6508e-dabc-43a7-8a5d-f6fd1bdb1873
+		summarizeBy: sum
+		sourceColumn: Plan 2022
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'HC plan by Division' = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\thao.nguyen-thu2\Downloads\employeedata.xlsx"), null, true),
+				    #"Data plan 2022_Sheet" = Source{[Item="Data plan 2022",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Data plan 2022_Sheet", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Headcount", type text}, {"Column2", type any}, {"Column3", type any}, {"Column4", type any}, {"Column5", type any}, {"Column6", type any}, {"Column7", type any}, {"Staff cost (Bn VND)", type text}, {"Column9", type any}, {"Column10", type any}, {"Column11", type any}, {"Column12", type any}, {"Column13", type text}, {"Column14", type any}, {"Column15", type any}, {"Column16", type any}, {"Column17", type any}, {"Column18", type any}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Changed Type",{"Headcount", "Column2", "Column3"}),
+				    #"Demoted Headers" = Table.DemoteHeaders(#"Removed Other Columns"),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Demoted Headers",{{"Column1", type text}, {"Column2", type any}, {"Column3", type any}}),
+				    #"Removed Top Rows" = Table.Skip(#"Changed Type1",1),
+				    #"Promoted Headers1" = Table.PromoteHeaders(#"Removed Top Rows", [PromoteAllScalars=true]),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Promoted Headers1",{{"Division", type text}, {"Plan May/22", Int64.Type}, {"Plan 2022", Int64.Type}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Changed Type2", each ([Division] <> null))
+				in
+				    #"Filtered Rows"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

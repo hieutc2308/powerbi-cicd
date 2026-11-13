@@ -1,0 +1,83 @@
+table 'Data to forecast HC'
+	lineageTag: 116fe2bc-651e-416a-aa7e-fea451d90b3c
+
+	column Division
+		dataType: string
+		lineageTag: 99347920-0e12-42c6-9685-e0df8347fcdb
+		summarizeBy: none
+		sourceColumn: Division
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Actual Jan/22'
+		dataType: int64
+		formatString: 0
+		lineageTag: 483d802d-5607-47b7-bbad-47aa54b22db4
+		summarizeBy: sum
+		sourceColumn: Actual Jan/22
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Actual Feb/22'
+		dataType: int64
+		formatString: 0
+		lineageTag: 7b8739c9-c554-4cfa-8042-ff90c227e70f
+		summarizeBy: sum
+		sourceColumn: Actual Feb/22
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Actual Mar/22'
+		dataType: int64
+		formatString: 0
+		lineageTag: 77200598-4e1f-41c1-ac5c-b00b61863837
+		summarizeBy: sum
+		sourceColumn: Actual Mar/22
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Actual Apr/22' =
+			CALCULATE(
+			    COUNTROWS('Data HC Apr 22'),
+			    FILTER(
+			        'Data HC Apr 22',
+			        'Data HC Apr 22'[Division] = 'Data to forecast HC'[Division]
+			    )
+			)
+		formatString: 0
+		lineageTag: 4c3c58dd-b68a-4914-bfac-f555623d4506
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Actual May/22' =
+			CALCULATE(
+			    COUNTROWS('Data HC May 22'),
+			    FILTER(
+			        'Data HC May 22',
+			        'Data HC May 22'[Division] = 'Data to forecast HC'[Division]
+			    )
+			)
+		formatString: 0
+		lineageTag: 006bad41-3d64-4238-b973-94142d836f1c
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Data to forecast HC' = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\thao.nguyen-thu2\Downloads\employeedata.xlsx"), null, true),
+				    #"Data to forecast HC_Sheet" = Source{[Item="Data to forecast HC",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Data to forecast HC_Sheet", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Division", type text}, {"Actual Jan/22", Int64.Type}, {"Actual Feb/22", Int64.Type}, {"Actual Mar/22", Int64.Type}, {"Actual Apr/22", type any}, {"Actual May/22", type any}, {"Forecast Jun/22", type any}, {"Forecast Jul/22", type any}, {"Forecast Aug/22", type any}}),
+				    #"Removed Blank Rows" = Table.SelectRows(#"Changed Type", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Removed Columns" = Table.RemoveColumns(#"Removed Blank Rows",{"Actual Apr/22", "Actual May/22", "Forecast Jun/22", "Forecast Jul/22", "Forecast Aug/22"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

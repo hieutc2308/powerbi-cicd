@@ -1,0 +1,68 @@
+table 'Turnover rate'
+	lineageTag: 2bcc535f-b202-463b-946a-573c68fc4c0c
+
+	column Year
+		dataType: string
+		lineageTag: defdc9f9-653e-4665-a565-0b8495df0d5f
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: string
+		lineageTag: 72a5d396-5596-4898-ab03-29f5aba96529
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Turnover rate'
+		dataType: double
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 95ad9188-2d4d-456a-b547-0fab708a33e7
+		summarizeBy: sum
+		sourceColumn: Turnover rate
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 95b15a9a-6cf6-41a8-88ad-b1af34334129
+		summarizeBy: none
+		sourceColumn: Month Date
+
+		variation Variation
+			isDefault
+			relationship: c240dd1d-77de-41a8-be91-1254b1a497b3
+			defaultHierarchy: LocalDateTable_4905c564-1ba2-4d86-89a9-d5542b5e6298.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition 'Turnover rate' = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\thao.nguyen-thu2\Downloads\employeedata.xlsx"), null, true),
+				    #"Data turnover+onboarding_Sheet" = Source{[Item="Data turnover+onboarding",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Data turnover+onboarding_Sheet", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Column1", type text}, {"Column2", type any}, {"Column3", type any}, {"Jan", type any}, {"Feb", type any}, {"Mar", type any}, {"Apr", type any}, {"May", type any}, {"Jun", type any}, {"Jul", type any}, {"Aug", type any}, {"Sep", type any}, {"Oct", type any}, {"Nov", type any}, {"Dec", type any}, {"Column16", type any}, {"Column17", type any}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Column2", "Column16", "Column17"}),
+				    #"Kept First Rows" = Table.FirstN(#"Removed Columns",2),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Kept First Rows",{"Column1"}),
+				    #"Unpivoted Other Columns" = Table.UnpivotOtherColumns(#"Removed Columns1", {"Column3"}, "Attribute", "Value"),
+				    #"Inserted Merged Column" = Table.AddColumn(#"Unpivoted Other Columns", "Merged", each Text.Combine({Text.From([Column3], "en-US"), [Attribute]}, "-"), type text),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Inserted Merged Column",{{"Merged", type date}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type1",{{"Column3", "Year"}, {"Attribute", "Month"}, {"Value", "Turnover rate"}, {"Merged", "Month Date"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

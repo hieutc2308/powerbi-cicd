@@ -1,0 +1,129 @@
+table 'Data cost 5M 22'
+	lineageTag: 5cc1f115-08f1-4471-af79-0311a50f5f0a
+
+	measure 'Total cost' = ABS(SUM('Data cost 5M 22'[AMOUNT_LCY]))/1000000000
+		formatString: 0
+		lineageTag: 76ebd77b-4b68-4e57-b786-49665cdb0366
+
+	measure 'Highest Cost Division' =
+			
+			SELECTCOLUMNS(
+			    TOPN(1, ALL('Data cost 5M 22'[Division]), [Total cost], DESC),
+			    "DivisionName", 'Data cost 5M 22'[Division]
+			)
+		lineageTag: 45b6411e-a338-4a9c-8aca-417e456cfcaf
+
+	measure 'Highest Cost Item' =
+			
+			SELECTCOLUMNS(
+			    TOPN(1, ALL('Data cost 5M 22'[Cost item]), [Total cost], DESC),
+			    "ItemName", 'Data cost 5M 22'[Cost item]
+			)
+		lineageTag: a2c27610-2b21-4c00-8fc0-06739a4c61bb
+
+	measure 'Highest Cost Month' =
+			
+			SELECTCOLUMNS(
+			    TOPN(1, ALL('Data cost 5M 22'[Month Date]), [Total cost], DESC),
+			    "MonthName", FORMAT('Data cost 5M 22'[Month Date], "MMMM")
+			)
+		lineageTag: 04294325-f2da-4db0-b20d-ab0c08471ea9
+
+	measure 'Average Cost Per Employee' = ([Total cost]/[Total Head Count])*1000
+		lineageTag: ea57fc0a-3e97-4e2d-9f9c-d35f6cb99ca9
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Salary Cost' =
+			
+			CALCULATE(
+			    ABS(SUM('Data cost 5M 22'[AMOUNT_LCY])) / 1000000000,
+			    'Data cost 5M 22'[Cost item] = "Salary"
+			)
+		lineageTag: 535daac8-4488-4910-83ce-d77eb52feb79
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MONTH_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 8fa70c51-b394-411a-922a-cfd64faa2a02
+		summarizeBy: count
+		sourceColumn: MONTH_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column AO_CODE
+		dataType: int64
+		formatString: 0
+		lineageTag: 9431e3a6-1d9d-4741-9e5e-96da772313e8
+		summarizeBy: sum
+		sourceColumn: AO_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column PALCAT
+		dataType: int64
+		formatString: 0
+		lineageTag: 959f1c68-9b9c-4438-9538-47b2e7111cd0
+		summarizeBy: sum
+		sourceColumn: PALCAT
+
+		annotation SummarizationSetBy = Automatic
+
+	column AMOUNT_LCY
+		dataType: int64
+		formatString: 0
+		lineageTag: a030fb1a-2b80-434a-97a4-ff6c236956b2
+		summarizeBy: sum
+		sourceColumn: AMOUNT_LCY
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Cost item'
+		dataType: string
+		lineageTag: 12670900-f5fd-49fc-8bf4-691394fc8042
+		summarizeBy: none
+		sourceColumn: Cost item
+
+		annotation SummarizationSetBy = Automatic
+
+	column Division
+		dataType: string
+		lineageTag: 83b13c44-1d7e-4ea7-8965-c0d210a211e1
+		summarizeBy: none
+		sourceColumn: Division
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 82270cd7-867b-4afa-882a-ef3e4c48b673
+		summarizeBy: none
+		sourceColumn: Month Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition 'Data cost 5M 22' = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\thao.nguyen-thu2\Downloads\employeedata.xlsx"), null, true),
+				    #"Data cost 5M.22_Sheet" = Source{[Item="Data cost 5M.22",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Data cost 5M.22_Sheet", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"MONTH_ID", Int64.Type}, {"AO_CODE", Int64.Type}, {"PALCAT", Int64.Type}, {"AMOUNT_LCY", Int64.Type}, {"Cost item", type text}, {"Division", type text}}),
+				    #"Added Custom" = Table.AddColumn(#"Changed Type", "Month Date", each Date.FromText(
+				    Text.Start(Text.From([MONTH_ID]),4) & "-" &
+				    Text.End(Text.From([MONTH_ID]),2) & "-01"
+				)),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Added Custom",{{"Month Date", type date}})
+				in
+				    #"Changed Type1"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+
