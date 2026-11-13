@@ -42,6 +42,9 @@ jobs:
         env:
           TE2_EXE: ${{ steps.te2.outputs.executable }}
         run: .\scripts\run-local.ps1 -Te2Exe $env:TE2_EXE
+      - name: Rebuild stakeholder guides from current rules
+        shell: pwsh
+        run: .venv\Scripts\python.exe scripts/build_guides.py
       - name: Stage only standalone website files
         shell: pwsh
         run: .venv\Scripts\python.exe -m pbi_cicd.cli --root . --build-index --site dist/site

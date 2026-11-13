@@ -76,7 +76,7 @@ const friendlyRules = {
 const ruleTitle = rule => friendlyRules[rule.ruleId]?.[0] || (rule.ruleName||rule.ruleId||'Rule').replace(/^\[[^\]]+\]\s*/, '');
 const ruleExplanation = rule => friendlyRules[rule.ruleId]?.[1] || 'Review the original rule and the affected object below.';
 function ruleMarkup(rule) {
-    return `<div class="rule-title">${esc(ruleTitle(rule))}</div><div class="rule-explanation">${esc(ruleExplanation(rule))}</div><details class="technical-rule"><summary>Original rule & ID</summary><div>${esc(rule.ruleName)}</div><code>${esc(rule.ruleId)}</code></details>`;
+    return `<div class="rule-title">${esc(ruleTitle(rule))}</div><code class="technical-id">${esc(rule.ruleId)}</code><div class="rule-explanation">${esc(ruleExplanation(rule))}</div><details class="technical-rule"><summary>Original rule name</summary><div>${esc(rule.ruleName)}</div></details>`;
 }
 let visible = [], visibleEdges = [], layoutNodes = new Map(), ranks = [], routes = [], scale = 1, tx = 30, ty = 100;
 let layoutQuality = {before:0, after:0};

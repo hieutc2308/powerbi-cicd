@@ -50,6 +50,20 @@ def test_stage_refuses_stale_source(fixture_repo: Path) -> None:
         stage_site(fixture_repo, fixture_repo / "dist/site")
 
 
+def test_stage_publishes_only_allowlisted_guides(fixture_repo: Path) -> None:
+    run_pipeline(root=fixture_repo, ticket="FIX-1")
+    docs = fixture_repo / "docs"
+    docs.mkdir()
+    for name in ("workflow.html", "bpa-rulebook.html", "private-notes.txt"):
+        (docs / name).write_text(name, encoding="utf-8")
+    site = stage_site(fixture_repo, fixture_repo / "dist/site")
+    assert sorted(p.name for p in (site / "guides").iterdir()) == ["bpa-rulebook.html", "workflow.html"]
+    catalog = (site / "index.html").read_text(encoding="utf-8")
+    assert 'href="guides/workflow.html"' in catalog
+    assert 'href="guides/bpa-rulebook.html"' in catalog
+    assert (fixture_repo / "dist/guides/workflow.html").is_file()
+
+
 def test_cli_all_and_matrix(fixture_repo: Path, capsys) -> None:
     assert main(["--root", str(fixture_repo), "--all"]) == 0
     assert (fixture_repo / "dist/FIX-1/index.html").exists()

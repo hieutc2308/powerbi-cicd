@@ -14,7 +14,7 @@ Phase 1 completion means the analyzer, documentation, CI, artifacts, and portal 
 
 ## Shared architecture and rules
 
-- One ticket owns exactly one PBIP project under `reports/<JIRA-ID>/`, including its local `.Report` and `.SemanticModel` folders. The current sample is TEST-001.
+- One ticket owns exactly one PBIP project under `reports/<JIRA-ID>/`, including its local `.Report` and `.SemanticModel` folders. Current samples are TEST-001 and TEST-002.
 - Global settings and BPA rules live in `config/`. Analyzer and TE2 extraction remain read-only against report/model definitions.
 - Each ticket produces isolated output in `dist/<JIRA-ID>/`. A repository catalog links to the current tickets; clean site staging contains only the standalone portal files and manifest.
 - Use fresh TE2 extraction in CI and validate artifact provenance before reuse. Never reuse another ticket's metadata or silently publish stale results after an infrastructure failure.
@@ -39,6 +39,8 @@ Phase 1 completion means the analyzer, documentation, CI, artifacts, and portal 
 
 ### Evidence and current behavior
 
+The counts and failures below record the initial consolidation snapshot. The later PR #1 correction record supersedes those Gate results; both ticket Gates subsequently passed.
+
 - Repository: https://github.com/hieutc2308/powerbi-cicd
 - Portal: https://hieutc2308.github.io/powerbi-cicd/
 - Sample: https://hieutc2308.github.io/powerbi-cicd/TEST-001/
@@ -49,11 +51,11 @@ Phase 1 completion means the analyzer, documentation, CI, artifacts, and portal 
 - The Pages workflow separately builds every current ticket from `main`. Deployment is enabled using repository variable `ENABLE_GITHUB_PAGES=true`.
 - Current GitHub Pages publication proceeds even when the report's BPA Gate fails. Build/extraction/deployment errors prevent a new publication. This was used to test and review the sample findings.
 - The public portal represents the latest successfully deployed snapshot of `main`, not uncommitted work or unmerged branches. Browser/CDN caching can briefly show the previous version.
-- GitHub PR summary behavior is configured and covered by tests; a complete real PR/merge exercise is still useful as migration evidence and is not claimed as completed here.
+- GitHub PR summary behavior was initially covered by tests; PR #1 subsequently completed the real PR/merge exercise.
 
 ### Follow-up carried into the next phases
 
-- Review TEST-001's 9 report reference findings, 5 measure-reference findings, and 2 relationship-type findings. Validate each before altering the report or changing rule severity.
+- [x] Review TEST-001's original 9 report reference findings, 5 measure-reference findings, and 2 relationship-type findings. Corrections and verification are recorded below.
 - Preserve a downloadable/viewable failed-branch snapshot when introducing stricter publication rules.
 
 ### Security and PR exercise — 2026-11-13
@@ -62,8 +64,8 @@ Phase 1 completion means the analyzer, documentation, CI, artifacts, and portal 
 - The approved correction substitutes synthetic literals in four bookmarks and their linked visual selections while retaining JSON keys, array order, operation tokens and query references. Twenty-six literal changes were structurally verified. Existing Git history still contains the earlier source; history rewriting is a separate decision.
 - Obsolete mockups and plans are deleted from the feature branch. All `.pbi/` editor/runtime state is ignored; previously tracked editor state is removed from version control while kept locally.
 - Hardware sales report is added under TEST-002. Fresh TE2 extraction and documentation generation succeed for both tickets; 37 fixture/runtime tests pass.
-- TEST-002 currently has two blocking relationship-type findings: Dates.Date is read as Unknown from the unprocessed calculated table, whereas its relationship partners are DateTime. Verify the actual model type before changing source or rule policy.
-- PR/merge exercise is in progress on `codex/test-002-hardware-sales`. Gate failures must remain visible; merge requires resolving or explicitly reviewing the failing checks, not silently weakening them.
+- At this initial scan TEST-002 had two blocking relationship-type findings: Dates.Date was Unknown in the unprocessed calculated table while its relationship partners were DateTime. The following root-cause correction resolves this false positive without guessing a type.
+- The exercise on `codex/test-002-hardware-sales` completed with PR #1 merged after successful checks. Gate failures remained visible until corrected.
 
 ### BPA root-cause corrections — PR #1 follow-up
 
@@ -73,6 +75,13 @@ Phase 1 completion means the analyzer, documentation, CI, artifacts, and portal 
 - Fresh read-only TE2 extraction and local `-EnforceGate` succeed for TEST-001 and TEST-002, each with zero blockers and zero rule evaluation errors. Unresolved type warnings remain; no calculated-column types were guessed or source data refreshed.
 - CI and Pages test jobs install TE2 before pytest so the known/unknown/matching relationship integration fixture is exercised on GitHub too.
 - PR summaries now link to exact-run per-ticket artifacts and explicitly label the Pages link as the published main snapshot. Selection remains diff-based; shared changes analyze all tickets.
+
+### Stakeholder documentation
+
+- English standalone Workflow Guide: workflow diagram, in-page navigation, ownership, selection, Gates, evidence and current publication behavior, with the GitLab and service/Jira phases explicitly marked as planned.
+- BPA Rulebook: all 49 catalog checks (40 default TE2, four Python, five optional VertiPaq), exact configured expressions, human explanations, implementation limitations and customization guidance.
+- README links both guides; clean Pages staging allowlists them under `guides/` and the catalog links to them. The Pages workflow regenerates guides from current rule sources. Publication follows the Pages workflow; deployment results are recorded in GitHub Actions.
+- The approved ticket UI v6 and report/model definitions are unchanged by this documentation work.
 
 ## Phase 2 — GitLab migration: planned
 
