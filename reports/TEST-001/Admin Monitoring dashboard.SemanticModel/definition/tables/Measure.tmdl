@@ -10,7 +10,7 @@ table Measure
 	/// Counts the number of distinct users with activity in the last N days, where N is defined by a slicer.
 	measure 'Active Users' = ```
 			
-			VAR range = 'Manual - Active threshold'[LastNdays]
+			VAR range = [LastNdays]
 			VAR cutoff_date = UTCTODAY() - range
 			
 			VAR result = 
@@ -48,7 +48,7 @@ table Measure
 	/// Counts the number of distinct capacities with activity in the last N days, where N is defined by a slicer.
 	measure 'Active Capacities' = ```
 			
-			VAR range = 'Manual - Active threshold'[LastNdays]
+			VAR range = [LastNdays]
 			VAR cutoff_date = UTCTODAY() - range
 			
 			VAR result = 
@@ -71,7 +71,7 @@ table Measure
 	/// Counts the number of distinct workspaces with activity in the last N days, where N is defined by a slicer.
 	measure 'Active Workspaces' = ```
 			
-			VAR range = 'Manual - Active threshold'[LastNdays]
+			VAR range = [LastNdays]
 			VAR cutoff_date = UTCTODAY() - range
 			
 			VAR result = 
@@ -93,7 +93,7 @@ table Measure
 	/// Counts the number of distinct dashboards/reports with activity in the last N days, where N is defined by a slicer.
 	measure 'Active Dashboards / Reports' = ```
 			
-			VAR range = 'Manual - Active threshold'[LastNdays]
+			VAR range = [LastNdays]
 			VAR cutoff_date = UTCTODAY() - range
 			
 			VAR result = 
@@ -376,7 +376,7 @@ table Measure
 			
 				IF(
 					SELECTEDVALUE('FactActivity_Events'[First Recorded]) 
-					>= TODAY() - 'Manual - Active threshold'[LastNdays],
+					>= TODAY() - [LastNdays],
 					"New"
 				)
 			```

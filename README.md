@@ -4,6 +4,8 @@
 
 The portal is regenerated from all ticket projects on `main` when the Pages workflow runs successfully. Pull request branches and uncommitted local changes are not included; if a build or deployment fails, the previous published version remains available. Check [workflow runs](https://github.com/hieutc2308/powerbi-cicd/actions/workflows/pages.yml) to confirm the latest deployment.
 
+See [PLAN.md](PLAN.md) for the consolidated roadmap: Phase 1 GitHub validation (done), Phase 2 GitLab migration, and Phase 3 Power BI/Fabric deployment pipelines with Jira ticket details.
+
 Each Jira ticket owns one independent Power BI project under `reports/<TICKET>/`. The current Admin Monitoring dashboard is in `reports/TEST-001/`. Analysis reads the report and model definitions without changing them.
 
 ## Repository layout
@@ -99,6 +101,10 @@ Never commit `.pbix`, `.pbi/cache.abf`, `.pbi/localSettings.json`, or `dist/`. G
 
 `pbi-ci.yml` runs fixture tests on every push/PR to `main` and on manual dispatch. It discovers affected tickets and runs each in a separate Windows matrix job with fresh TE2 extraction and a ticket-specific artifact. Shared changes under `scripts/`, `config/`, `tests/`, or `.github/`, and changes to `pyproject.toml`, `.gitattributes`, `.gitignore`, or `AGENTS.md`, analyze all tickets. Manual and initial pushes analyze all tickets. Documentation-only changes do not analyze reports.
 
+PR summaries contain the tickets selected from that PR's diff, not every report with an existing failure. A report-only PR for `reports/TEST-002/` analyzes TEST-002; shared pipeline/rule changes analyze all current tickets. Any selected ticket's failed Gate fails the aggregate check. The PR comment links to that run's documentation artifacts; its published portal link points to the latest deployed `main` snapshot. Branch pushes without a PR do not trigger this workflow; opening or updating a PR targeting `main` does. Pages runs separately after a push to `main` and rebuilds all current tickets.
+
+Offline TE2 may report calculated-table column types as Unknown because no processed model is attached. A relationship type mismatch blocks only when both endpoint types are known. Unresolved endpoint types produce the visible `RELATIONSHIP_COLUMN_TYPE_UNRESOLVED` warning and require verification in a processed model; a passing static Gate does not certify runtime type compatibility. A TE2 integration fixture verifies that a real known-type mismatch still blocks.
+
 Severity 3 findings, invalid references, and rule evaluation errors fail the configured Advisory Gate; lower-severity findings remain visible. The stable **PBIP CI status** job combines test/discovery/matrix results, including changes with no affected tickets. Use this check for branch protection. PR summaries are posted only for same-repository pull requests; fork PRs still receive checks and artifacts without write access.
 
 `pages.yml` runs on `main` and manual dispatch. It tests the analyzer, freshly analyzes every current ticket, and uploads the standalone `portal-site` artifact. Download and extract it to open `index.html` locally. Deployment to GitHub Pages is disabled by default; BPA Gate failures remain visible in the portal, while extraction/build failures stop the build. Pages publishes documentation, not reports to Power BI Service.
@@ -122,4 +128,4 @@ Tests use independent PBIP fixtures and cover ticket discovery, path isolation, 
 
 Configure `pbip.reports_root`, `output.dist_dir`, BPA severity overrides, ignored rules, and the shared rules file in `config/cicd-config.json`. Update `config/bpa-rules.json` for shared TE2 rules. Local VertiPaq rules remain separate in `config/bpa-rules-vertipaq.json`.
 
-The report UI source remains in `scripts/pbi_cicd/portal/`; `docs/mockups/lineage-canvas-v6.html` is the design reference. Generated artifacts are disposable and rebuilt from source.
+The report UI source lives in `scripts/pbi_cicd/portal/`. Superseded mockups and implementation plans have been consolidated into the source UI and root PLAN.md. Generated artifacts are disposable and rebuilt from source. Local PBIX backups live in the ignored `local-backups/` directory; `.venv/` remains local development tooling.

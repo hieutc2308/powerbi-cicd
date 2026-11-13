@@ -23,10 +23,20 @@
     "ID": "RELATIONSHIP_COLUMNS_SAME_DATA_TYPE",
     "Name": "[Error Prevention] Relationship columns should be of the same data type",
     "Category": "Error Prevention",
-    "Description": "Columns on both sides of a relationship should share the same data type to avoid join mismatches or conversion overhead.",
+    "Description": "Known data types on both relationship endpoints must match. Offline calculated-table columns with unresolved types are reported separately.",
     "Severity": 3,
     "Scope": "Relationship",
-    "Expression": "FromColumn.DataType != ToColumn.DataType",
+    "Expression": "FromColumn.DataType.ToString() != \"Unknown\" and ToColumn.DataType.ToString() != \"Unknown\" and FromColumn.DataType.ToString() != \"Automatic\" and ToColumn.DataType.ToString() != \"Automatic\" and FromColumn.DataType != ToColumn.DataType",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "RELATIONSHIP_COLUMN_TYPE_UNRESOLVED",
+    "Name": "[Validation Coverage] Relationship column type is unresolved offline",
+    "Category": "Validation Coverage",
+    "Description": "An endpoint type is Unknown or Automatic in the offline model. This does not prove a mismatch; verify the inferred type in a processed model before deployment.",
+    "Severity": 2,
+    "Scope": "Relationship",
+    "Expression": "FromColumn.DataType.ToString() = \"Unknown\" or ToColumn.DataType.ToString() = \"Unknown\" or FromColumn.DataType.ToString() = \"Automatic\" or ToColumn.DataType.ToString() = \"Automatic\"",
     "CompatibilityLevel": 1200
   },
   {

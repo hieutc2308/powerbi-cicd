@@ -256,7 +256,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "CapacityName"
@@ -305,7 +305,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "CapacityName"
@@ -346,7 +346,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "WorkSpaceName"
@@ -395,7 +395,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "WorkSpaceName"
@@ -436,7 +436,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "User UPN"
@@ -485,7 +485,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "User UPN"
@@ -526,7 +526,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "Operation"
@@ -575,7 +575,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "Operation"
@@ -607,7 +607,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "Date"
@@ -657,7 +657,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "Date"
@@ -671,7 +671,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "Date"
@@ -691,7 +691,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "Date"
@@ -741,7 +741,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "Date"
@@ -755,7 +755,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "Date"
@@ -787,7 +787,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "Date"
@@ -822,7 +822,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "Date"
@@ -836,7 +836,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "Date"
@@ -859,7 +859,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "WorkSpaceName"
@@ -923,7 +923,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "WorkSpaceName"
@@ -943,7 +943,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "Date"
@@ -993,7 +993,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "Date"
@@ -1007,7 +1007,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "Date"
@@ -1121,7 +1121,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "User UPN"
@@ -1156,7 +1156,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "User UPN"
@@ -1176,7 +1176,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "Operation"
@@ -1211,7 +1211,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "Operation"
@@ -1231,7 +1231,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "WorkSpaceName"
@@ -1266,7 +1266,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "WorkSpaceName"
@@ -1286,7 +1286,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "CapacityName"
@@ -1321,7 +1321,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "CapacityName"

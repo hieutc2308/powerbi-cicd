@@ -1,0 +1,126 @@
+table Dates
+	lineageTag: 86e58a93-a0cc-4710-87f5-41bb43568ef5
+
+	column Date
+		formatString: General Date
+		lineageTag: 644b9fc5-4abb-44a4-b7fb-5b7177e38924
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		variation Variation
+			isDefault
+			relationship: 93678069-e1fa-497e-b9e0-89545ac472de
+			defaultHierarchy: LocalDateTable_71602ee2-f032-4168-b51c-ad801593fefc.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		formatString: 0
+		lineageTag: 39794ad7-2027-45db-b858-b90f12886664
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Year]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		lineageTag: 15dfecc7-a726-43ba-a21c-2769cf8be3c7
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Quarter]
+
+		annotation SummarizationSetBy = Automatic
+
+	column QuarterNo
+		formatString: 0
+		lineageTag: 93cf7037-d8a3-443e-85ac-894bacc8b85e
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [QuarterNo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		lineageTag: 500ecf78-7572-4cec-83a0-4d8ba89db3b8
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month]
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthNo
+		formatString: 0
+		lineageTag: 58a16687-ec86-4709-9cc0-71179c9809f4
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [MonthNo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Week
+		lineageTag: 8f4126a1-6cc1-4d41-a82b-2cb9c38c67c5
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Week]
+
+		annotation SummarizationSetBy = Automatic
+
+	column WeekNo
+		formatString: 0
+		lineageTag: ca37e935-ec59-4ebc-87ff-dbd5c2e9deac
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [WeekNo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column WeekID
+		formatString: 0
+		lineageTag: 6eefcd82-e32d-4955-b971-113ff805506a
+		summarizeBy: count
+		isNameInferred
+		sourceColumn: [WeekID]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Day
+		lineageTag: 73b3d34e-8cda-44ca-9faf-c8668852ff01
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Day]
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayNo
+		formatString: 0
+		lineageTag: 073c3bc4-695c-4156-9229-1e2246c04c9f
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [DayNo]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dates = calculated
+		mode: import
+		source = ```
+				
+				 VAR _MinYear = YEAR(MIN(Sales[DateKey]))
+				RETURN
+				ADDCOLUMNS(
+				    CALENDARAUTO(),
+				    "Year", YEAR([Date]),
+				    "Quarter", "Q"&QUARTER([Date]),
+				    "QuarterNo", QUARTER([Date]),
+				    "Month", FORMAT([Date], "MMM"),
+				    "MonthNo", MONTH([Date]),
+				    "Week", FORMAT([Date], "WWW"),
+				    "WeekNo", WEEKNUM([Date]),
+				    "WeekID", WEEKNUM([Date], 1) + (YEAR([Date]) - _MinYear) * 53,
+				    "Day", FORMAT([Date], "DDD"),
+				    "DayNo", DAY([Date])
+				)
+				```
+
+	annotation PBI_Id = 31f4952387194566999fb6be345e44f4
+

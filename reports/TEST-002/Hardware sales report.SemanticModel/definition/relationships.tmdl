@@ -1,0 +1,21 @@
+relationship AutoDetected_5f26b563-e113-4fe9-9f8e-f8a7d1c3a631
+	fromColumn: Sales.ProductKey
+	toColumn: Products.ProductKey
+
+relationship AutoDetected_3e6dc41d-775f-4011-bf18-eb0d9b95795b
+	fromColumn: Sales.StoreKey
+	toColumn: Store.StoreKey
+
+relationship AutoDetected_e1223678-732d-461f-b441-3e5c65632df9
+	fromColumn: Store.LocationKey
+	toColumn: Locations.LocationKey
+
+relationship 93678069-e1fa-497e-b9e0-89545ac472de
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Dates.Date
+	toColumn: LocalDateTable_71602ee2-f032-4168-b51c-ad801593fefc.Date
+
+relationship 4706eb31-5c16-c843-6538-e4c42f92dd39
+	fromColumn: Sales.DateKey
+	toColumn: Dates.Date
+

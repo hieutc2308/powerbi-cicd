@@ -229,7 +229,7 @@
             }
           },
           "selector": {
-            "metadata": "Sum(Dataset Refreshables.refreshFailures)"
+            "metadata": "Sum(DimRefreshables.refresh_failures)"
           }
         },
         {

@@ -291,7 +291,7 @@ def generate_pr_summary_md(
     ]
 
     if pages_link:
-        lines.append(f"📊 **Interactive Lineage & Docs Portal**: [{pages_link}]({pages_link})")
+        lines.append(f"📊 **Published main portal (not this PR preview)**: [{pages_link}]({pages_link})")
         lines.append("")
 
     top_rules = bpa_report.get("ruleSummary", [])[:8]

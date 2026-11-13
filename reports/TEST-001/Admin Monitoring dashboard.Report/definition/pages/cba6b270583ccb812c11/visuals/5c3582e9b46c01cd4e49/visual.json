@@ -231,10 +231,10 @@
                                     "Column": {
                                       "Expression": {
                                         "SourceRef": {
-                                          "Entity": "Activity Events"
+                                          "Entity": "FactActivity_Events"
                                         }
                                       },
-                                      "Property": "IsSuccess"
+                                      "Property": "is_success"
                                     }
                                   },
                                   "Function": 3
@@ -267,10 +267,10 @@
                                     "Column": {
                                       "Expression": {
                                         "SourceRef": {
-                                          "Entity": "Activity Events"
+                                          "Entity": "FactActivity_Events"
                                         }
                                       },
-                                      "Property": "IsSuccess"
+                                      "Property": "is_success"
                                     }
                                   },
                                   "Function": 3
@@ -315,10 +315,10 @@
                                     "Column": {
                                       "Expression": {
                                         "SourceRef": {
-                                          "Entity": "Activity Events"
+                                          "Entity": "FactActivity_Events"
                                         }
                                       },
-                                      "Property": "IsSuccess"
+                                      "Property": "is_success"
                                     }
                                   },
                                   "Function": 3
@@ -351,10 +351,10 @@
                                     "Column": {
                                       "Expression": {
                                         "SourceRef": {
-                                          "Entity": "Activity Events"
+                                          "Entity": "FactActivity_Events"
                                         }
                                       },
-                                      "Property": "IsSuccess"
+                                      "Property": "is_success"
                                     }
                                   },
                                   "Function": 3
@@ -392,7 +392,7 @@
                 }
               }
             ],
-            "metadata": "Activity Events.IsSuccess"
+            "metadata": "FactActivity_Events.is_success"
           }
         }
       ],
@@ -464,7 +464,7 @@
             }
           },
           "selector": {
-            "metadata": "Activity Events.IsSuccess"
+            "metadata": "FactActivity_Events.is_success"
           }
         },
         {
@@ -492,7 +492,7 @@
             }
           },
           "selector": {
-            "metadata": "Activity Events.ItemName"
+            "metadata": "FactActivity_Events.item_name"
           }
         },
         {
@@ -689,7 +689,7 @@
             }
           },
           "selector": {
-            "metadata": "Activity Events.IsSuccess"
+            "metadata": "FactActivity_Events.is_success"
           }
         },
         {
