@@ -1,0 +1,202 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 0,
+            "y": 38
+          },
+          "nodeIndex": "Data cost 5M 22",
+          "nodeLineageTag": "5cc1f115-08f1-4471-af79-0311a50f5f0a",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 284,
+            "y": 50
+          },
+          "nodeIndex": "Data HC Apr 22",
+          "nodeLineageTag": "c2112bbe-80c9-4937-9593-5efb4fbb3a10",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 568,
+            "y": 0
+          },
+          "nodeIndex": "Data HC May 22",
+          "nodeLineageTag": "bfd9b0b3-9cc8-4705-9d55-7db48ee35ea5",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1136,
+            "y": 2
+          },
+          "nodeIndex": "Data to forecast HC",
+          "nodeLineageTag": "116fe2bc-651e-416a-aa7e-fea451d90b3c",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 852,
+            "y": 0
+          },
+          "nodeIndex": "HC plan by Division",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 6.7488458908351276,
+            "y": 531.19903489708122
+          },
+          "nodeIndex": "Staff cost plan by Division",
+          "nodeLineageTag": "16174e3b-c736-44a4-8524-7ccbb0f4a85e",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 357.94466377818725
+          },
+          "nodeIndex": "Staff cost plan by Item",
+          "nodeLineageTag": "062a1793-5214-4082-9a52-a5f56e281819",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 889.81372344486,
+            "y": 454.4992698863901
+          },
+          "nodeIndex": "Turnover by Tenure",
+          "nodeLineageTag": "56451756-568d-42c9-85fe-597a00444c79",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 262.01944259625179,
+            "y": 681.37142742893866
+          },
+          "nodeIndex": "Turnover rate",
+          "nodeLineageTag": "2bcc535f-b202-463b-946a-573c68fc4c0c",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 577.776935137442,
+            "y": 454.4992698863901
+          },
+          "nodeIndex": "Turnover by Career level",
+          "nodeLineageTag": "fe7db1b6-8bdf-44c3-9ff3-0a5c42b9cd43",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 268.25284811583003,
+            "y": 422.2857177855451
+          },
+          "nodeIndex": "Date",
+          "nodeLineageTag": "e220bb01-3b7f-43c3-a2da-77e885a79b82",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1710.206652232109,
+            "y": 378.68571371446933
+          },
+          "nodeIndex": "Movement",
+          "nodeLineageTag": "ab166620-35f6-429a-89d1-bd57e835a857",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 578.56867646888224,
+            "y": 673.261810557035
+          },
+          "nodeIndex": "Onboarding",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1994.206652232109,
+            "y": 426.68571371446933
+          },
+          "nodeIndex": "Voluntary leaved",
+          "nodeLineageTag": "b995b718-c432-4df0-911c-c3c740503abb",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 62.336089590424336,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

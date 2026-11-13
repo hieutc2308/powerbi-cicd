@@ -1,0 +1,80 @@
+table Movement
+	lineageTag: ab166620-35f6-429a-89d1-bd57e835a857
+
+	measure '# Transfer' = ROUND((COUNTROWS(Movement) - 'Data HC May 22'[# Out]) / 2, 0)
+		lineageTag: 0a74baa3-d626-46b7-b815-3ea65caf0c11
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Employee ID'
+		dataType: string
+		lineageTag: 08957d4f-2362-4ce0-8e2a-da0fec671ea1
+		summarizeBy: none
+		sourceColumn: Employee ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Division
+		dataType: string
+		lineageTag: 5e39162d-5905-497b-a3a6-ad216ac8a13b
+		summarizeBy: none
+		sourceColumn: Division
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Career Level'
+		dataType: string
+		lineageTag: 8f8a47ff-3b39-4d0f-9bbf-74089c731fb2
+		summarizeBy: none
+		sourceColumn: Career Level
+
+		annotation SummarizationSetBy = Automatic
+
+	column Position
+		dataType: string
+		lineageTag: 5c8412b4-3546-47da-97d6-bc2a89f0a3e8
+		summarizeBy: none
+		sourceColumn: Position
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Hire Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 31ab5e63-e0a4-479a-a3d5-39e80525f444
+		summarizeBy: none
+		sourceColumn: Hire Date
+
+		variation Variation
+			isDefault
+			relationship: 6a2ab83f-840d-4512-b9df-cfdaecf5e4f2
+			defaultHierarchy: LocalDateTable_d66cbb89-1d35-4da2-93ce-b0c350adfe83.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Count
+		dataType: int64
+		formatString: 0
+		lineageTag: 2cd00c92-f30d-45cf-a079-2f8c23697d4a
+		summarizeBy: sum
+		sourceColumn: Count
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Movement = m
+		mode: import
+		source =
+				let
+				    Source = Table.Combine({#"Data HC May 22", #"Data HC Apr 22"}),
+				    #"Grouped Rows" = Table.Group(Source, {"Employee ID", "Division", "Career Level", "Position", "Hire Date"}, {{"Count", each Table.RowCount(_), Int64.Type}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Grouped Rows", each ([Count] = 1)),
+				    #"Filtered Rows1" = Table.SelectRows(#"Filtered Rows", each [Hire Date] < #date(2022, 5, 1))
+				in
+				    #"Filtered Rows1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

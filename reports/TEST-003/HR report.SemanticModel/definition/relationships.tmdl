@@ -1,0 +1,51 @@
+relationship c240dd1d-77de-41a8-be91-1254b1a497b3
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Turnover rate'.'Month Date'
+	toColumn: LocalDateTable_4905c564-1ba2-4d86-89a9-d5542b5e6298.Date
+
+relationship 58b344ab-0cc3-d02e-6d57-1f24ddc06bdd
+	fromColumn: 'Data cost 5M 22'.'Month Date'
+	toColumn: Date.Date
+
+relationship f7a00c63-6221-5d14-04c4-76602a8e091c
+	fromColumn: 'Data HC May 22'.'Hire Date'
+	toColumn: Date.Date
+
+relationship ebcc67ca-ae04-5bf6-7b72-43f459ffc756
+	fromColumn: 'Data HC Apr 22'.'Hire Date'
+	toColumn: Date.Date
+
+relationship 83b06418-20db-19e5-7f8f-8eae5172005e
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Date.Date
+	toColumn: 'Turnover rate'.'Month Date'
+
+relationship d9917c0e-2ee7-45bd-a5c7-b65496207a8a
+	fromColumn: Onboarding.'Month Date'
+	toColumn: Date.Date
+
+relationship 6a2ab83f-840d-4512-b9df-cfdaecf5e4f2
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Movement.'Hire Date'
+	toColumn: LocalDateTable_d66cbb89-1d35-4da2-93ce-b0c350adfe83.Date
+
+relationship 21213895-e062-29f5-1820-34b108885299
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: 'HC plan by Division'.Division
+	toColumn: 'Data to forecast HC'.Division
+
+relationship ec185b1f-c04f-4754-8824-16476eaac65b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Voluntary leaved'.'Month Date'
+	toColumn: LocalDateTable_9ece0dec-d8b8-4e79-991c-d5f68aaa4d27.Date
+
+relationship 152c1d49-46aa-a42b-e980-d5b219954504
+	fromColumn: 'Data cost 5M 22'.'Cost item'
+	toColumn: 'Staff cost plan by Item'.Items
+
+relationship 85fe0a95-bd3a-4909-4157-89ea2a263a01
+	fromColumn: 'Data cost 5M 22'.Division
+	toColumn: 'Staff cost plan by Division'.Division
+

@@ -1,0 +1,24 @@
+table Date
+	lineageTag: e220bb01-3b7f-43c3-a2da-77e885a79b82
+
+	column Date
+		formatString: General Date
+		lineageTag: 19ccb6d9-ce09-4ee4-9229-e16c4ed9311a
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Date = calculated
+		mode: import
+		source = ```
+				
+				CALENDAR (
+				    MIN ( 'Data HC Apr 22'[Hire Date]), 
+				    MAX ( 'Data HC May 22'[Hire Date]) 
+				)
+				```
+
+	annotation PBI_Id = 862bf21d46c34b119f0abd77e821d37f
+

@@ -1,0 +1,54 @@
+table 'Turnover by Career level'
+	lineageTag: fe7db1b6-8bdf-44c3-9ff3-0a5c42b9cd43
+
+	column 'Career level'
+		dataType: string
+		lineageTag: ecf723fd-099b-4848-9b22-41c21b540439
+		summarizeBy: none
+		sourceColumn: Career level
+
+		annotation SummarizationSetBy = Automatic
+
+	column Group
+		dataType: string
+		lineageTag: 964714ea-7baa-4406-8c03-e47f7533ab5c
+		summarizeBy: none
+		sourceColumn: Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Turnover rate'
+		dataType: double
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 8257c549-97d0-46e0-a5eb-291001fc13cd
+		summarizeBy: sum
+		sourceColumn: Turnover rate
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Turnover by Career level' = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\thao.nguyen-thu2\Downloads\employeedata.xlsx"), null, true),
+				    #"Data turnover+onboarding_Sheet" = Source{[Item="Data turnover+onboarding",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Data turnover+onboarding_Sheet", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Column1", type text}, {"Column2", type any}, {"Column3", type any}, {"Jan", type any}, {"Feb", type any}, {"Mar", type any}, {"Apr", type any}, {"May", type any}, {"Jun", type any}, {"Jul", type any}, {"Aug", type any}, {"Sep", type any}, {"Oct", type any}, {"Nov", type any}, {"Dec", type any}, {"Column16", type any}, {"Column17", type any}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Column2", "Column16", "Column17"}),
+				    #"Removed Top Rows" = Table.Skip(#"Removed Columns",17),
+				    #"Removed Bottom Rows" = Table.RemoveLastN(#"Removed Top Rows",9),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Removed Bottom Rows",{"Jan"}),
+				    #"Promoted Headers1" = Table.PromoteHeaders(#"Removed Columns1", [PromoteAllScalars=true]),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Promoted Headers1",{{"Turnover by career level", type text}, {"Column2", type text}, {"A1+A2", type number}, {"Non A1,A2", type number}, {"Column5", type any}, {"Column6", type any}, {"Column7", type any}, {"Column8", type any}, {"Column9", type any}, {"Column10", type any}, {"Column11", type any}, {"Column12", type any}, {"Column13", type any}}),
+				    #"Removed Columns2" = Table.RemoveColumns(#"Changed Type1",{"Column5", "Column6", "Column7", "Column8", "Column9", "Column10", "Column11", "Column12", "Column13", "Turnover by career level"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Removed Columns2", each ([Column2] <> null)),
+				    #"Renamed Columns" = Table.RenameColumns(#"Filtered Rows",{{"Column2", "Career level"}}),
+				    #"Unpivoted Other Columns" = Table.UnpivotOtherColumns(#"Renamed Columns", {"Career level"}, "Attribute", "Value"),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Unpivoted Other Columns",{{"Value", "Turnover rate"}, {"Attribute", "Group"}})
+				in
+				    #"Renamed Columns1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
