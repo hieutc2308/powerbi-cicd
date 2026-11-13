@@ -5,7 +5,7 @@ table 'Data HC May 22'
 		formatString: 0
 		lineageTag: fda447d0-40ad-4c91-9893-9ec5f2c23d4a
 
-	measure '# Out' = COUNTROWS('Data HC Apr 22') + 'Data HC May 22'[# In] - COUNTROWS('Data HC May 22')
+	measure '# Out' = COUNTROWS('Data HC Apr 22') + [# In] - COUNTROWS('Data HC May 22')
 		formatString: 0
 		lineageTag: b83bed47-efa8-427e-a8ad-cb204768d90c
 

@@ -1,7 +1,7 @@
 table Movement
 	lineageTag: ab166620-35f6-429a-89d1-bd57e835a857
 
-	measure '# Transfer' = ROUND((COUNTROWS(Movement) - 'Data HC May 22'[# Out]) / 2, 0)
+	measure '# Transfer' = ROUND((COUNTROWS(Movement) - [# Out]) / 2, 0)
 		lineageTag: 0a74baa3-d626-46b7-b815-3ea65caf0c11
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}

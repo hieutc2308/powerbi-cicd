@@ -5,7 +5,7 @@ table 'Staff cost plan by Division'
 		formatString: 0
 		lineageTag: 08d77220-060f-4d8f-9ebb-c02f29121aa6
 
-	measure 'Budget variance' = ('Staff cost plan by Division'[Plan cost] - 'Data cost 5M 22'[Total cost])/'Staff cost plan by Division'[Plan cost]
+	measure 'Budget variance' = ([Plan cost] - [Total cost])/[Plan cost]
 		formatString: 0.00%;-0.00%;0.00%
 		lineageTag: 23a56ae0-2b7c-47ec-ad7f-20aa227efd8f
 

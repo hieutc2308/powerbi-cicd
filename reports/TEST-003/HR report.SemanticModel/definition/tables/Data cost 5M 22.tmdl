@@ -29,7 +29,7 @@ table 'Data cost 5M 22'
 			)
 		lineageTag: 04294325-f2da-4db0-b20d-ab0c08471ea9
 
-	measure 'Average Cost Per Employee' = ('Data cost 5M 22'[Total cost]/'Data HC May 22'[Total Head Count])*1000
+	measure 'Average Cost Per Employee' = ([Total cost]/[Total Head Count])*1000
 		lineageTag: ea57fc0a-3e97-4e2d-9f9c-d35f6cb99ca9
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
