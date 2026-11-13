@@ -29,12 +29,14 @@ jobs:
           python -m pip install uv
           uv venv .venv
           uv pip install --python .venv\Scripts\python.exe -e ".[dev]"
-      - name: Verify generator before publication
-        shell: pwsh
-        run: .venv\Scripts\python.exe -m pytest tests/ -v
       - name: Set up TE2
         id: te2
         uses: ./.github/actions/setup-te2
+      - name: Verify generator before publication
+        shell: pwsh
+        env:
+          TE2_EXE: ${{ steps.te2.outputs.executable }}
+        run: .venv\Scripts\python.exe -m pytest tests/ -v
       - name: Build every current ticket from fresh metadata
         shell: pwsh
         env:

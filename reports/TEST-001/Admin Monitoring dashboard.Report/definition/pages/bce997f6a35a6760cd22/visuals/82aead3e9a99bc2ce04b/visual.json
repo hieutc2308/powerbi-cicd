@@ -882,7 +882,7 @@
             }
           },
           "selector": {
-            "metadata": "Activity Events.ItemName"
+            "metadata": "FactActivity_Events.item_name"
           }
         },
         {
@@ -933,10 +933,10 @@
                       "Column": {
                         "Expression": {
                           "SourceRef": {
-                            "Entity": "Activity Events"
+                            "Entity": "FactActivity_Events"
                           }
                         },
-                        "Property": "ItemName"
+                        "Property": "item_name"
                       }
                     },
                     "Right": {
@@ -971,10 +971,10 @@
                       "Column": {
                         "Expression": {
                           "SourceRef": {
-                            "Entity": "Activity Events"
+                            "Entity": "FactActivity_Events"
                           }
                         },
-                        "Property": "ItemName"
+                        "Property": "item_name"
                       }
                     },
                     "Right": {
@@ -1009,10 +1009,10 @@
                       "Column": {
                         "Expression": {
                           "SourceRef": {
-                            "Entity": "Activity Events"
+                            "Entity": "FactActivity_Events"
                           }
                         },
-                        "Property": "ItemName"
+                        "Property": "item_name"
                       }
                     },
                     "Right": {
@@ -1047,10 +1047,10 @@
                       "Column": {
                         "Expression": {
                           "SourceRef": {
-                            "Entity": "Activity Events"
+                            "Entity": "FactActivity_Events"
                           }
                         },
-                        "Property": "ItemName"
+                        "Property": "item_name"
                       }
                     },
                     "Right": {
@@ -1085,10 +1085,10 @@
                       "Column": {
                         "Expression": {
                           "SourceRef": {
-                            "Entity": "Activity Events"
+                            "Entity": "FactActivity_Events"
                           }
                         },
-                        "Property": "ItemName"
+                        "Property": "item_name"
                       }
                     },
                     "Right": {
@@ -1123,10 +1123,10 @@
                       "Column": {
                         "Expression": {
                           "SourceRef": {
-                            "Entity": "Activity Events"
+                            "Entity": "FactActivity_Events"
                           }
                         },
-                        "Property": "ItemName"
+                        "Property": "item_name"
                       }
                     },
                     "Right": {
@@ -1161,10 +1161,10 @@
                       "Column": {
                         "Expression": {
                           "SourceRef": {
-                            "Entity": "Activity Events"
+                            "Entity": "FactActivity_Events"
                           }
                         },
-                        "Property": "ItemName"
+                        "Property": "item_name"
                       }
                     },
                     "Right": {
@@ -1199,10 +1199,10 @@
                       "Column": {
                         "Expression": {
                           "SourceRef": {
-                            "Entity": "Activity Events"
+                            "Entity": "FactActivity_Events"
                           }
                         },
-                        "Property": "ItemName"
+                        "Property": "item_name"
                       }
                     },
                     "Right": {
@@ -1237,10 +1237,10 @@
                       "Column": {
                         "Expression": {
                           "SourceRef": {
-                            "Entity": "Activity Events"
+                            "Entity": "FactActivity_Events"
                           }
                         },
-                        "Property": "ItemName"
+                        "Property": "item_name"
                       }
                     },
                     "Right": {
@@ -1275,10 +1275,10 @@
                       "Column": {
                         "Expression": {
                           "SourceRef": {
-                            "Entity": "Activity Events"
+                            "Entity": "FactActivity_Events"
                           }
                         },
-                        "Property": "ItemName"
+                        "Property": "item_name"
                       }
                     },
                     "Right": {
@@ -1313,10 +1313,10 @@
                       "Column": {
                         "Expression": {
                           "SourceRef": {
-                            "Entity": "Activity Events"
+                            "Entity": "FactActivity_Events"
                           }
                         },
-                        "Property": "ItemName"
+                        "Property": "item_name"
                       }
                     },
                     "Right": {
@@ -1351,10 +1351,10 @@
                       "Column": {
                         "Expression": {
                           "SourceRef": {
-                            "Entity": "Activity Events"
+                            "Entity": "FactActivity_Events"
                           }
                         },
-                        "Property": "ItemName"
+                        "Property": "item_name"
                       }
                     },
                     "Right": {
@@ -1781,7 +1781,7 @@
             }
           },
           "selector": {
-            "metadata": "Activity Events.ItemName"
+            "metadata": "FactActivity_Events.item_name"
           }
         },
         {

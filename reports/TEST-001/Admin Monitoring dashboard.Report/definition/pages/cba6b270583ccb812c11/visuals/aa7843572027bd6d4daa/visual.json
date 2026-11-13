@@ -90,15 +90,15 @@
                                       "Source": "m"
                                     }
                                   },
-                                  "Property": "Validation time"
+                                  "Property": "Model Refresh"
                                 },
-                                "Name": "Measure.Validation time"
+                                "Name": "Measure.Model Refresh"
                               }
                             ]
                           }
                         }
                       },
-                      "Property": "Measure.Validation time"
+                      "Property": "Measure.Model Refresh"
                     }
                   },
                   "IncludeAllTypes": 1

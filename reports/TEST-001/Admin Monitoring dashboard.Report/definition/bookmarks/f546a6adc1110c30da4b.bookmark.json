@@ -66,7 +66,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "WorkSpaceName"
@@ -83,10 +83,10 @@
                         "Column": {
                           "Expression": {
                             "SourceRef": {
-                              "Entity": "Dataset Refreshables"
+                              "Entity": "DimRefreshables"
                             }
                           },
-                          "Property": "refreshFailures"
+                          "Property": "refresh_failures"
                         }
                       },
                       "Function": 0
@@ -120,7 +120,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "WorkSpaceName"
@@ -141,7 +141,7 @@
                     "From": [
                       {
                         "Name": "a",
-                        "Entity": "Activity Events",
+                        "Entity": "FactActivity_Events",
                         "Type": 0
                       }
                     ],
@@ -179,7 +179,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "ArtifactKind"
@@ -197,7 +197,7 @@
                     "From": [
                       {
                         "Name": "d",
-                        "Entity": "Dataset Refreshables",
+                        "Entity": "DimRefreshables",
                         "Type": 0
                       }
                     ],
@@ -252,7 +252,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Dataset Refreshables"
+                          "Entity": "DimRefreshables"
                         }
                       },
                       "Property": "UpdatedTime"
@@ -267,7 +267,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "WorkSpaceName"
@@ -297,10 +297,10 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
-                      "Property": "ItemName"
+                      "Property": "item_name"
                     }
                   },
                   "howCreated": 0
@@ -327,7 +327,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Dataset Refreshables"
+                          "Entity": "DimRefreshables"
                         }
                       },
                       "Property": "Calculation period"
@@ -344,7 +344,7 @@
                         "Column": {
                           "Expression": {
                             "SourceRef": {
-                              "Entity": "Dataset Refreshables"
+                              "Entity": "DimRefreshables"
                             }
                           },
                           "Property": "refreshCount"
@@ -364,7 +364,7 @@
                         "Column": {
                           "Expression": {
                             "SourceRef": {
-                              "Entity": "Dataset Refreshables"
+                              "Entity": "DimRefreshables"
                             }
                           },
                           "Property": "refreshesPerDay"
@@ -384,10 +384,10 @@
                         "Column": {
                           "Expression": {
                             "SourceRef": {
-                              "Entity": "Dataset Refreshables"
+                              "Entity": "DimRefreshables"
                             }
                           },
-                          "Property": "refreshFailures"
+                          "Property": "refresh_failures"
                         }
                       },
                       "Function": 4
@@ -409,10 +409,10 @@
                         "Column": {
                           "Expression": {
                             "SourceRef": {
-                              "Entity": "Dataset Refreshables"
+                              "Entity": "DimRefreshables"
                             }
                           },
-                          "Property": "refreshFailures"
+                          "Property": "refresh_failures"
                         }
                       },
                       "Function": 4
@@ -426,7 +426,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "WorkSpaceName"
@@ -436,17 +436,17 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
-                      "Property": "ItemName"
+                      "Property": "item_name"
                     }
                   },
                   {
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Dataset Refreshables"
+                          "Entity": "DimRefreshables"
                         }
                       },
                       "Property": "Calculation period"
@@ -469,7 +469,7 @@
                           "Column": {
                             "Expression": {
                               "SourceRef": {
-                                "Entity": "Activity Events"
+                                "Entity": "FactActivity_Events"
                               }
                             },
                             "Property": "WorkSpaceName"
@@ -480,17 +480,17 @@
                     },
                     {
                       "queryRefs": [
-                        "Activity Events.ItemName"
+                        "FactActivity_Events.item_name"
                       ],
                       "identityKeys": [
                         {
                           "Column": {
                             "Expression": {
                               "SourceRef": {
-                                "Entity": "Activity Events"
+                                "Entity": "FactActivity_Events"
                               }
                             },
-                            "Property": "ItemName"
+                            "Property": "item_name"
                           }
                         }
                       ],
@@ -648,7 +648,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "User UPN"
@@ -683,7 +683,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "User UPN"
@@ -703,7 +703,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "Operation"
@@ -738,7 +738,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "Operation"
@@ -758,7 +758,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "WorkSpaceName"
@@ -800,7 +800,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "WorkSpaceName"
@@ -820,7 +820,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "CapacityName"
@@ -843,7 +843,7 @@
                             "From": [
                               {
                                 "Name": "a",
-                                "Entity": "Activity Events",
+                                "Entity": "FactActivity_Events",
                                 "Type": 0
                               }
                             ],
@@ -923,7 +923,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "CapacityName"

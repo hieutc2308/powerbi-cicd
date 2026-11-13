@@ -47,8 +47,13 @@ jobs:
           python -m pip install uv
           uv venv .venv
           uv pip install --python .venv\Scripts\python.exe -e ".[dev]"
+      - name: Set up TE2 for integration tests
+        id: te2
+        uses: ./.github/actions/setup-te2
       - name: Test independent PBIP fixtures and v6 UI
         shell: pwsh
+        env:
+          TE2_EXE: ${{ steps.te2.outputs.executable }}
         run: .venv\Scripts\python.exe -m pytest tests/ -v
 
   analyze-and-gate:
@@ -140,9 +145,12 @@ jobs:
             const marker = '<!-- pbi-cicd-summary -->';
             const selected = JSON.parse(process.env.MATRIX_JSON || '{"include":[]}').include;
             const deleted = JSON.parse(process.env.DELETED_TICKETS || '[]');
+            const artifacts = await github.paginate(github.rest.actions.listWorkflowRunArtifacts, {...context.repo, run_id: context.runId});
             const sections = selected.map(({ticket}) => {
               const file = path.join('ticket-results', `report-${ticket}`, 'pr-summary.md');
-              return `## ${ticket}\n\n` + (fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : 'No analysis report was generated. Check the ticket job logs.');
+              const artifact = artifacts.find(a => a.name === `report-${ticket}`);
+              const docs = artifact ? `[Download this PR's ${ticket} docs](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}/artifacts/${artifact.id})` : 'No documentation artifact is available.';
+              return `## ${ticket}\n\n${docs}\n\n` + (fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : 'No analysis report was generated. Check the ticket job logs.');
             });
             if (deleted.length) sections.push('Removed tickets: ' + deleted.join(', '));
             if (!sections.length) sections.push('No report tickets were affected by this change.');

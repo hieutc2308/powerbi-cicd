@@ -72,7 +72,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "Date"
@@ -107,7 +107,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "Date"
@@ -121,7 +121,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "Date"
@@ -156,7 +156,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "WorkSpaceName"
@@ -171,7 +171,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "Operation"
@@ -186,10 +186,10 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
-                      "Property": "IsSuccess"
+                      "Property": "is_success"
                     }
                   },
                   "howCreated": 0
@@ -201,7 +201,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "User UPN"
@@ -216,10 +216,10 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
-                      "Property": "ItemName"
+                      "Property": "item_name"
                     }
                   },
                   "howCreated": 0
@@ -250,7 +250,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "WorkSpaceName"
@@ -260,7 +260,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "Operation"
@@ -270,17 +270,17 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
-                      "Property": "ItemName"
+                      "Property": "item_name"
                     }
                   },
                   {
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "User UPN"
@@ -290,10 +290,10 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
-                      "Property": "IsSuccess"
+                      "Property": "is_success"
                     }
                   }
                 ]
@@ -314,7 +314,7 @@
                           "Column": {
                             "Expression": {
                               "SourceRef": {
-                                "Entity": "Activity Events"
+                                "Entity": "FactActivity_Events"
                               }
                             },
                             "Property": "WorkSpaceName"
@@ -333,7 +333,7 @@
                           "Column": {
                             "Expression": {
                               "SourceRef": {
-                                "Entity": "Activity Events"
+                                "Entity": "FactActivity_Events"
                               }
                             },
                             "Property": "Operation"
@@ -344,7 +344,7 @@
                     },
                     {
                       "queryRefs": [
-                        "Activity Events.ItemName"
+                        "FactActivity_Events.item_name"
                       ],
                       "isCollapsed": true,
                       "identityKeys": [
@@ -352,10 +352,10 @@
                           "Column": {
                             "Expression": {
                               "SourceRef": {
-                                "Entity": "Activity Events"
+                                "Entity": "FactActivity_Events"
                               }
                             },
-                            "Property": "ItemName"
+                            "Property": "item_name"
                           }
                         }
                       ],
@@ -371,7 +371,7 @@
                           "Column": {
                             "Expression": {
                               "SourceRef": {
-                                "Entity": "Activity Events"
+                                "Entity": "FactActivity_Events"
                               }
                             },
                             "Property": "User UPN"
@@ -382,7 +382,7 @@
                     },
                     {
                       "queryRefs": [
-                        "Activity Events.IsSuccess"
+                        "FactActivity_Events.is_success"
                       ],
                       "isCollapsed": true,
                       "isPinned": true
@@ -477,7 +477,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "User UPN"
@@ -512,7 +512,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "User UPN"
@@ -532,7 +532,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "Operation"
@@ -567,7 +567,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "Operation"
@@ -587,7 +587,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "WorkSpaceName"
@@ -622,7 +622,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "WorkSpaceName"
@@ -642,7 +642,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "CapacityName"
@@ -677,7 +677,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "Activity Events"
+                          "Entity": "FactActivity_Events"
                         }
                       },
                       "Property": "CapacityName"

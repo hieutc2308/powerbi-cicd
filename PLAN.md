@@ -10,7 +10,7 @@ Updated: 2026-11-13. This file is the project roadmap and progress record. READM
 | 2 | Move the validated workflow to the target GitLab environment | Planned; environment discovery required |
 | 3 | Integrate Power BI / Fabric deployment pipelines and Jira ticket details | Planned; depends on Phase 2 |
 
-Phase 1 completion means the analyzer, documentation, CI, artifacts, and portal have been exercised on GitHub. It does not mean the sample report passes every BPA rule. TEST-001 currently has 16 blocking findings; CI correctly reports a failed Gate and preserves its documentation.
+Phase 1 completion means the analyzer, documentation, CI, artifacts, and portal have been exercised on GitHub. Initial TEST-001 validation had 16 blocking findings; CI correctly reported the failed Gate and preserved documentation. The PR #1 follow-up fixes the underlying stale bindings and measure references and distinguishes unresolved offline types from proven mismatches; see the verification record below.
 
 ## Shared architecture and rules
 
@@ -64,6 +64,15 @@ Phase 1 completion means the analyzer, documentation, CI, artifacts, and portal 
 - Hardware sales report is added under TEST-002. Fresh TE2 extraction and documentation generation succeed for both tickets; 37 fixture/runtime tests pass.
 - TEST-002 currently has two blocking relationship-type findings: Dates.Date is read as Unknown from the unprocessed calculated table, whereas its relationship partners are DateTime. Verify the actual model type before changing source or rule policy.
 - PR/merge exercise is in progress on `codex/test-002-hardware-sales`. Gate failures must remain visible; merge requires resolving or explicitly reviewing the failing checks, not silently weakening them.
+
+### BPA root-cause corrections — PR #1 follow-up
+
+- Reproduced the type-check false positive using real TE2 and an independent fixture: an inferred calculated-table column is Unknown offline and was incorrectly treated as a proven mismatch against a known type. The mismatch rule now requires two resolved endpoint types; a separate severity-2 coverage warning preserves every unresolved case for processed-model verification. A genuine Int64/DateTime mismatch still produces a severity-3 blocker.
+- TEST-001 measure expressions now reference the LastNdays measure without a table qualifier, preserving the referenced object and calculation.
+- Rebound obsolete PBIR columns/table names to FactActivity_Events.is_success, FactActivity_Events.item_name and DimRefreshables.refresh_failures, including linked saved bookmark/query metadata. Title textboxes now use the existing Model Refresh measure for their "Updated until" value.
+- Fresh read-only TE2 extraction and local `-EnforceGate` succeed for TEST-001 and TEST-002, each with zero blockers and zero rule evaluation errors. Unresolved type warnings remain; no calculated-column types were guessed or source data refreshed.
+- CI and Pages test jobs install TE2 before pytest so the known/unknown/matching relationship integration fixture is exercised on GitHub too.
+- PR summaries now link to exact-run per-ticket artifacts and explicitly label the Pages link as the published main snapshot. Selection remains diff-based; shared changes analyze all tickets.
 
 ## Phase 2 — GitLab migration: planned
 
