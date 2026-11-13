@@ -2,11 +2,19 @@
 
 **Open the documentation portal:** [Lineage Studio](https://hieutc2308.github.io/powerbi-cicd/) · [TEST-001](https://hieutc2308.github.io/powerbi-cicd/TEST-001/)
 
+## Explain this project to stakeholders
+
+Start with the English [Workflow Guide](docs/workflow.html): a workflow diagram and in-page navigation, responsibilities, ticket selection, pass/fail decisions, evidence and the three-phase rollout. The [BPA Rulebook](docs/bpa-rulebook.html) explains every configured check, its intent, severity, detection logic, limitations and customization points. Both standalone HTML files include light/dark themes, bundled fonts and Print / PDF; download the files and open them in Chrome or Edge if GitHub shows source code.
+
+The Pages bundle includes these guides under `guides/`, with links from the report catalog. After deploying this revision, use the [online Workflow Guide](https://hieutc2308.github.io/powerbi-cicd/guides/workflow.html) and [online BPA Rulebook](https://hieutc2308.github.io/powerbi-cicd/guides/bpa-rulebook.html) for sharing. These URLs require that revision to be published first.
+
+The operating flow is: **ticket → report branch → pull request → automated checks and documentation → quality Gate → human review → merge → published documentation**. A failing Gate still leaves its generated artifact available for review. The current Pages workflow runs independently of the Gate and can publish a FAIL result; it does not deploy reports to Power BI Service.
+
 The portal is regenerated from all ticket projects on `main` when the Pages workflow runs successfully. Pull request branches and uncommitted local changes are not included; if a build or deployment fails, the previous published version remains available. Check [workflow runs](https://github.com/hieutc2308/powerbi-cicd/actions/workflows/pages.yml) to confirm the latest deployment.
 
 See [PLAN.md](PLAN.md) for the consolidated roadmap: Phase 1 GitHub validation (done), Phase 2 GitLab migration, and Phase 3 Power BI/Fabric deployment pipelines with Jira ticket details.
 
-Each Jira ticket owns one independent Power BI project under `reports/<TICKET>/`. The current Admin Monitoring dashboard is in `reports/TEST-001/`. Analysis reads the report and model definitions without changing them.
+Each Jira ticket owns one independent Power BI project under `reports/<TICKET>/`. The examples are Admin Monitoring dashboard in `reports/TEST-001/` and Hardware sales report in `reports/TEST-002/`. Analysis reads the report and model definitions without changing them. These synthetic ticket keys do not imply a working Jira integration.
 
 ## Repository layout
 
@@ -23,6 +31,7 @@ reports/
 config/                      Shared pipeline settings and BPA rules
 scripts/                     Analyzer, TE2 extraction, and approved v6 UI
 tests/                      Independent synthetic PBIP fixtures
+docs/                       English standalone workflow and BPA guides
 dist/                       Generated locally and ignored by Git
   index.html                 Ticket catalog
   projects.json
@@ -81,7 +90,7 @@ $env:PYTHONPATH = 'scripts'
 .venv\Scripts\python.exe -m pbi_cicd.cli --build-index --site dist/site
 ```
 
-`--check-gates` checks existing results against the current input fingerprint before enforcing the Gate. `--build-index` lists only tickets currently in the repository. Site staging requires up-to-date results for every current ticket, replaces the previous staged site, and copies only the catalog, font-bundled standalone HTML workspaces, manifest, and `.nojekyll`. Raw metadata, test fixtures, caches, and tools are excluded.
+`--check-gates` checks existing results against the current input fingerprint before enforcing the Gate. `--build-index` lists only tickets currently in the repository. Site staging requires up-to-date results for every current ticket, replaces the previous staged site, and copies only the catalog, font-bundled standalone HTML workspaces, the two allowlisted HTML guides, manifest, and `.nojekyll`. Raw metadata, test fixtures, caches, and tools are excluded.
 
 Open `dist/index.html` in Chrome or Edge to select a ticket, or open `dist/TEST-001/index.html` directly. Do not open `scripts/pbi_cicd/portal/index.html`: it is a generator template. Each ticket keeps the approved v6 interface, including light/dark themes, Catalog, model-only lineage, relationship canvas, M/DAX/code details, usage drill-down, and BPA filters. The root catalog is an additional entry point.
 
@@ -100,6 +109,16 @@ Never commit `.pbix`, `.pbi/cache.abf`, `.pbi/localSettings.json`, or `dist/`. G
 ## GitHub Actions and Pages
 
 `pbi-ci.yml` runs fixture tests on every push/PR to `main` and on manual dispatch. It discovers affected tickets and runs each in a separate Windows matrix job with fresh TE2 extraction and a ticket-specific artifact. Shared changes under `scripts/`, `config/`, `tests/`, or `.github/`, and changes to `pyproject.toml`, `.gitattributes`, `.gitignore`, or `AGENTS.md`, analyze all tickets. Manual and initial pushes analyze all tickets. Documentation-only changes do not analyze reports.
+
+| Event | CI ticket analysis | Pages publication |
+| --- | --- | --- |
+| Open, update or reopen PR targeting main | Diff-selected tickets; all for shared changes | None |
+| Push branch without an open PR | None | None |
+| Push main after merge | Diff-selected tickets | Separate workflow rebuilds all tickets |
+| Manual workflow dispatch | CI: all tickets | Pages: all tickets from the selected ref |
+| README / docs / plan-only PR | Tests run; ticket jobs skipped | None until a main push |
+
+In a PR's Checks tab, open the matching Actions run and download `report-<TICKET>`. Its ZIP contains `index.html`, model/measure/BPA Markdown, analysis JSON, TE2 metadata/provenance and BPA extraction output. Extract before opening HTML; GitHub does not serve an uploaded artifact as an interactive branch website. Retention is 30 days. If extraction fails before generation, some or all output may be missing; inspect the failed job logs.
 
 PR summaries contain the tickets selected from that PR's diff, not every report with an existing failure. A report-only PR for `reports/TEST-002/` analyzes TEST-002; shared pipeline/rule changes analyze all current tickets. Any selected ticket's failed Gate fails the aggregate check. The PR comment links to that run's documentation artifacts; its published portal link points to the latest deployed `main` snapshot. Branch pushes without a PR do not trigger this workflow; opening or updating a PR targeting `main` does. Pages runs separately after a push to `main` and rebuilds all current tickets.
 
@@ -127,5 +146,13 @@ These workflows do not deploy to Fabric/Power BI Service or write to Jira. Ticke
 Tests use independent PBIP fixtures and cover ticket discovery, path isolation, metadata provenance, selection, generated outputs, clean site staging, PowerShell syntax, workflow contracts, and Node-based portal runtime regression tests. Node tests supplement browser review. Production report names and counts are not required by the fixtures.
 
 Configure `pbip.reports_root`, `output.dist_dir`, BPA severity overrides, ignored rules, and the shared rules file in `config/cicd-config.json`. Update `config/bpa-rules.json` for shared TE2 rules. Local VertiPaq rules remain separate in `config/bpa-rules-vertipaq.json`.
+
+See the [BPA Rulebook](docs/bpa-rulebook.html) for 40 default TE2 rules, four Python checks and five optional VertiPaq rules. The optional rules need measured annotations and are not executed by the default pipeline. To update the guides after changing rules or workflow explanations:
+
+```powershell
+.venv\Scripts\python.exe scripts/build_guides.py
+```
+
+Commit the guide builder and regenerated `docs/*.html` together. Tests check that the committed guides match their sources and preserve every configured rule's expression; Pages also regenerates the guides before staging. Human explanations live in `scripts/build_guides.py`; the build rejects rule IDs without matching explanations. Rule changes need independent finding/non-finding tests, with actual TE2 validation where relevant. Changes to severity, ignores or thresholds are policy decisions; they do not fix a report.
 
 The report UI source lives in `scripts/pbi_cicd/portal/`. Superseded mockups and implementation plans have been consolidated into the source UI and root PLAN.md. Generated artifacts are disposable and rebuilt from source. Local PBIX backups live in the ignored `local-backups/` directory; `.venv/` remains local development tooling.
