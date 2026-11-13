@@ -1,0 +1,25 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["Sales","Products","Store","Locations","All Measures"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table Sales
+ref table Products
+ref table Store
+ref table Locations
+ref table Dates
+ref table 'All Measures'
+ref table DateTableTemplate_3baeb57d-958d-41d0-a7c2-4d1d5e174fd7
+ref table LocalDateTable_71602ee2-f032-4168-b51c-ad801593fefc
+
+ref cultureInfo en-US
+

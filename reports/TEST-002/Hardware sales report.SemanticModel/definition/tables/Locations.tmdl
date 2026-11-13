@@ -1,0 +1,73 @@
+table Locations
+	lineageTag: e80c6447-f643-4ee1-9d71-0763164e4891
+
+	column LocationKey
+		dataType: int64
+		formatString: 0
+		lineageTag: e70191af-b29d-44bd-b784-31df81e32d97
+		summarizeBy: none
+		sourceColumn: LocationKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column GeographyType
+		dataType: string
+		lineageTag: 98d30557-30d8-4567-ac8c-43b4e7ff2113
+		summarizeBy: none
+		sourceColumn: GeographyType
+
+		annotation SummarizationSetBy = Automatic
+
+	column Continent
+		dataType: string
+		lineageTag: 227846b9-833e-47eb-8584-9644e9e5ef20
+		summarizeBy: none
+		sourceColumn: Continent
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		lineageTag: d2b9e132-5350-47a4-8b86-bf3148a71726
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	column State
+		dataType: string
+		lineageTag: aadbb325-81b0-473c-ab3b-37480a51e89f
+		summarizeBy: none
+		sourceColumn: State
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		lineageTag: 493e45a4-b01f-4a5f-90e9-d2da6de4c53d
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	column Geometry
+		dataType: string
+		lineageTag: 8a9457b8-bcf7-4333-98ff-4fcd0673104b
+		summarizeBy: none
+		sourceColumn: Geometry
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Locations = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\ASUS\Downloads\Location.xlsx"), null, true),
+				    Locations_Sheet = Source{[Item="Locations",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Locations_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"LocationKey", Int64.Type}, {"GeographyType", type text}, {"Continent", type text}, {"City", type text}, {"State", type text}, {"Country", type text}, {"Geometry", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

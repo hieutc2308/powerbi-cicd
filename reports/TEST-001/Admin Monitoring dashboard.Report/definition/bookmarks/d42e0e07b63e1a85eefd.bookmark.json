@@ -395,7 +395,7 @@
                         "identityValues": [
                           {
                             "Literal": {
-                              "Value": "'Cree Board of Health'"
+                              "Value": "'Sample Workspace'"
                             }
                           }
                         ],
@@ -415,7 +415,7 @@
                                 "identityValues": [
                                   {
                                     "Literal": {
-                                      "Value": "'Wounds Dashboard'"
+                                      "Value": "'Sample Activity Dashboard'"
                                     }
                                   }
                                 ],
@@ -425,7 +425,7 @@
                                     "identityValues": [
                                       {
                                         "Literal": {
-                                          "Value": "'jordana.carnicelli@swiftmedical.com'"
+                                          "Value": "'sample.user@example.invalid'"
                                         }
                                       }
                                     ],

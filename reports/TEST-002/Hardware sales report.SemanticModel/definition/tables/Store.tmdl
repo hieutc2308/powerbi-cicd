@@ -1,0 +1,102 @@
+table Store
+	lineageTag: 2022a8f9-4eca-43e7-b336-79e982c13673
+
+	column StoreKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 2329eb53-5bc4-4eec-86ee-fb5c3a50d313
+		summarizeBy: none
+		sourceColumn: StoreKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column LocationKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 4a5efa80-7364-499b-bb91-a1cb96784fc7
+		summarizeBy: none
+		sourceColumn: LocationKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column StoreManager
+		dataType: int64
+		formatString: 0
+		lineageTag: abdf37ed-1b85-4727-bd16-3862a8ab9106
+		summarizeBy: sum
+		sourceColumn: StoreManager
+
+		annotation SummarizationSetBy = Automatic
+
+	column StoreType
+		dataType: string
+		lineageTag: 98a090aa-9d1e-411a-bbbb-f646332d601a
+		summarizeBy: none
+		sourceColumn: StoreType
+
+		annotation SummarizationSetBy = Automatic
+
+	column StoreName
+		dataType: string
+		lineageTag: 716b908a-d5fb-4eb5-8b2e-71945abbb961
+		summarizeBy: none
+		sourceColumn: StoreName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ZipCode
+		dataType: int64
+		formatString: 0
+		lineageTag: b8b5c5e7-569a-4271-9f34-577dec2c1bf3
+		summarizeBy: count
+		sourceColumn: ZipCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column StorePhone
+		dataType: string
+		lineageTag: 2bb3fdd3-47b7-4282-8332-18c606dc98de
+		summarizeBy: none
+		sourceColumn: StorePhone
+
+		annotation SummarizationSetBy = Automatic
+
+	column AddressLine1
+		dataType: string
+		lineageTag: c05be5fe-23da-49c3-95bf-e5adac814634
+		summarizeBy: none
+		sourceColumn: AddressLine1
+
+		annotation SummarizationSetBy = Automatic
+
+	column EmployeeCount
+		dataType: int64
+		formatString: 0
+		lineageTag: be416597-fb19-47ea-a7fd-173f48616c5a
+		summarizeBy: sum
+		sourceColumn: EmployeeCount
+
+		annotation SummarizationSetBy = Automatic
+
+	column SellingAreaSize
+		dataType: int64
+		formatString: 0
+		lineageTag: a483fdae-9c8f-4145-a5fa-33818db05f91
+		summarizeBy: sum
+		sourceColumn: SellingAreaSize
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Store = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\ASUS\Downloads\Store.xlsx"), null, true),
+				    Store_Sheet = Source{[Item="Store",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Store_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"StoreKey", Int64.Type}, {"LocationKey", Int64.Type}, {"StoreManager", Int64.Type}, {"StoreType", type text}, {"StoreName", type text}, {"ZipCode", Int64.Type}, {"StorePhone", type text}, {"AddressLine1", type text}, {"EmployeeCount", Int64.Type}, {"SellingAreaSize", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

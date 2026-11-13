@@ -4,6 +4,8 @@
 
 The portal is regenerated from all ticket projects on `main` when the Pages workflow runs successfully. Pull request branches and uncommitted local changes are not included; if a build or deployment fails, the previous published version remains available. Check [workflow runs](https://github.com/hieutc2308/powerbi-cicd/actions/workflows/pages.yml) to confirm the latest deployment.
 
+See [PLAN.md](PLAN.md) for the consolidated roadmap: Phase 1 GitHub validation (done), Phase 2 GitLab migration, and Phase 3 Power BI/Fabric deployment pipelines with Jira ticket details.
+
 Each Jira ticket owns one independent Power BI project under `reports/<TICKET>/`. The current Admin Monitoring dashboard is in `reports/TEST-001/`. Analysis reads the report and model definitions without changing them.
 
 ## Repository layout
@@ -122,4 +124,4 @@ Tests use independent PBIP fixtures and cover ticket discovery, path isolation, 
 
 Configure `pbip.reports_root`, `output.dist_dir`, BPA severity overrides, ignored rules, and the shared rules file in `config/cicd-config.json`. Update `config/bpa-rules.json` for shared TE2 rules. Local VertiPaq rules remain separate in `config/bpa-rules-vertipaq.json`.
 
-The report UI source remains in `scripts/pbi_cicd/portal/`; `docs/mockups/lineage-canvas-v6.html` is the design reference. Generated artifacts are disposable and rebuilt from source.
+The report UI source lives in `scripts/pbi_cicd/portal/`. Superseded mockups and implementation plans have been consolidated into the source UI and root PLAN.md. Generated artifacts are disposable and rebuilt from source. Local PBIX backups live in the ignored `local-backups/` directory; `.venv/` remains local development tooling.

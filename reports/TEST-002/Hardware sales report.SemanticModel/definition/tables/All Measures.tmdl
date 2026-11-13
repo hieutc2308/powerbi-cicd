@@ -1,0 +1,69 @@
+table 'All Measures'
+	lineageTag: deeed6c8-84a2-4787-8a54-f6bcf228c188
+
+	measure 'Total Sales' = SUM(Sales[SalesAmount])
+		formatString: 0
+		lineageTag: 65c22ff1-412e-423f-a41a-b929e64c923c
+
+	measure 'Total Sales YTD' = TOTALYTD([Total Sales], Dates[Date])
+		formatString: 0
+		lineageTag: b16590c6-0a61-4f39-9ce5-327bed26822e
+
+	measure 'Total Sales - CW' = ```
+			
+			VAR CurentWeek = CALCULATE(MAX(Dates[WeekID]), REMOVEFILTERS(Sales[DateKey])) 
+			VAR SalesCurrentWeek = CALCULATE([Total Sales], Dates[WeekID] = CurentWeek)
+			
+			RETURN SalesCurrentWeek
+			```
+		formatString: 0
+		lineageTag: 5f80c5d7-1645-4b71-b340-efd7c18063a7
+
+	measure 'Total Employees' = SUM(Store[EmployeeCount])
+		formatString: 0
+		lineageTag: 91ebab79-a080-4607-94e9-f3217cd0a9f3
+
+	measure 'Total Selling Area Size' = SUM(Store[SellingAreaSize])
+		formatString: 0
+		lineageTag: 14088798-6a00-4de8-b8af-97e2189d5b96
+
+	measure 'Total Sales - LW' =
+			
+			VAR LastWeek = CALCULATE(MAX(Dates[WeekID]), REMOVEFILTERS(Sales[DateKey])) -1
+			VAR SalesLastWeek = CALCULATE([Total Sales], Dates[WeekID] = LastWeek)
+			
+			RETURN SalesLastWeek
+		formatString: 0
+		lineageTag: 568ef759-3362-4264-a7de-93b2da11487e
+
+	measure 'Average Unit Cost' = AVERAGE(Sales[UnitCost])
+		lineageTag: 98e1b6e4-4fd0-4f65-a5b7-2e8ad24c7960
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Average Unit Price' = AVERAGE(Sales[UnitPrice])
+		lineageTag: e7f42663-6214-4ee0-b8c0-62af8e84e8f6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Dummy
+		dataType: string
+		lineageTag: 523432db-84d7-4a02-8839-6cb2b002dbfd
+		summarizeBy: none
+		sourceColumn: Dummy
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'All Measures' = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Dummy = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Dummy", type text}})
+				in
+				    #"Changed Type"
+
+	changedProperty = Name
+
+	annotation PBI_ResultType = Table
+

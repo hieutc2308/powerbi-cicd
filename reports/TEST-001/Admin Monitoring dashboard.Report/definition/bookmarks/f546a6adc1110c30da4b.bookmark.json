@@ -867,28 +867,28 @@
                                       [
                                         {
                                           "Literal": {
-                                            "Value": "'smdevdvpowerbipbie1'"
+                                            "Value": "'sample-capacity-01'"
                                           }
                                         }
                                       ],
                                       [
                                         {
                                           "Literal": {
-                                            "Value": "'smdevqapowerbipbie1'"
+                                            "Value": "'sample-capacity-02'"
                                           }
                                         }
                                       ],
                                       [
                                         {
                                           "Literal": {
-                                            "Value": "'smusaprpowerbipbie1'"
+                                            "Value": "'sample-capacity-03'"
                                           }
                                         }
                                       ],
                                       [
                                         {
                                           "Literal": {
-                                            "Value": "'smcanprpowerbipbic1'"
+                                            "Value": "'sample-capacity-04'"
                                           }
                                         }
                                       ]

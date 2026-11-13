@@ -1,0 +1,109 @@
+table Products
+	lineageTag: d7c0741e-6845-4214-8bb6-30b9661c701d
+
+	column ProductKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 75adf8c2-758d-4d3a-a0a8-3b638455a88f
+		summarizeBy: none
+		sourceColumn: ProductKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductName
+		dataType: string
+		lineageTag: b2435908-3cf9-4631-b831-8243cbb55a38
+		summarizeBy: none
+		sourceColumn: ProductName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Manufacturer
+		dataType: string
+		lineageTag: 242373a0-3730-4ee9-850b-ad3fade32946
+		summarizeBy: none
+		sourceColumn: Manufacturer
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClassName
+		dataType: string
+		lineageTag: 361d1769-7723-43b6-8b54-24d03610315f
+		summarizeBy: none
+		sourceColumn: ClassName
+
+		annotation SummarizationSetBy = Automatic
+
+	column StyleName
+		dataType: string
+		lineageTag: 28338c89-45b8-4f15-8219-1ce3e661c41c
+		summarizeBy: none
+		sourceColumn: StyleName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ColorName
+		dataType: string
+		lineageTag: 8718013f-62e8-49bc-b901-26d8e51f3bab
+		summarizeBy: none
+		sourceColumn: ColorName
+
+		annotation SummarizationSetBy = Automatic
+
+	column StockTypeName
+		dataType: string
+		lineageTag: 00307d2d-da4f-4fc0-a323-1330e2756bf6
+		summarizeBy: none
+		sourceColumn: StockTypeName
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitCost
+		dataType: double
+		lineageTag: ca76d07c-b158-417c-b027-50bcd7babfeb
+		summarizeBy: none
+		sourceColumn: UnitCost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column UnitPrice
+		dataType: double
+		lineageTag: 987213b7-b009-4ef0-a2ee-cad49f848083
+		summarizeBy: none
+		sourceColumn: UnitPrice
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ProductSubcategoryName
+		dataType: string
+		lineageTag: 24d7e2a9-8070-4041-961c-964c01dc2114
+		summarizeBy: none
+		sourceColumn: ProductSubcategoryName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductCategoryName
+		dataType: string
+		lineageTag: df63f77a-4e63-41e8-9d4e-d393033c19e9
+		summarizeBy: none
+		sourceColumn: ProductCategoryName
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Products = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\ASUS\Downloads\Products.xlsx"), null, true),
+				    Products_Sheet = Source{[Item="Products",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Products_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ProductKey", Int64.Type}, {"ProductName", type text}, {"Manufacturer", type text}, {"ClassName", type text}, {"StyleName", type text}, {"ColorName", type text}, {"StockTypeName", type text}, {"UnitCost", type number}, {"UnitPrice", type number}, {"ProductSubcategoryName", type text}, {"ProductCategoryName", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

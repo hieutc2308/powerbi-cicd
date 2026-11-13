@@ -2,9 +2,11 @@
 **/.pbi/localSettings.json
 **/.pbi/cache.abf
 **/.pbi/unappliedChanges.json
+**/.pbi/
 
 # Binary Power BI desktop files
 *.pbix
+local-backups/
 
 # CI/CD generated outputs & downloaded tools
 dist/
